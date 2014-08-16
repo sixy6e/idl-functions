@@ -35,6 +35,9 @@ def label_region(data, all_neighbors=False, ULong=False):
     :history:
         *  16/08/2014: Created
 
+    :author:
+        Josh Sixsmith; josh.sixsmith@gmail.com; joshua.sixsmith@ga.gov.au
+
     :copyright:
         Copyright (c) 2014, Josh Sixsmith
         All rights reserved.

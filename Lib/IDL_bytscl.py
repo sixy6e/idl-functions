@@ -31,13 +31,13 @@ def bytscl(array, Max=None, Min=None, Top=255, NaN=False):
         >>> scl_a = bytscl(a)
 
     :author:
-        Josh Sixsmith; joshua.sixsmith@ga.gov.au; josh.sixsmith@gmail.com
+        Josh Sixsmith; josh.sixsmith@gmail.com; joshua.sixsmith@ga.gov.au
 
     :history:
        *  2013/10/24: Created
 
     :copyright:
-        Copyright (c) 2013, Josh Sixsmith
+        Copyright (c) 2014, Josh Sixsmith
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without

@@ -37,16 +37,20 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
         >>> grown_region = region_grow(array, roi, stddev_multiplier=2.5, All_Neighbors=True)
 
     :author:
-        Josh Sixsmith; joshua.sixsmith@ga.gov.au, josh.sixsmith@gmail.com
+        Josh Sixsmith; josh.sixsmith@gmail.com; joshua.sixsmith@ga.gov.au
 
     :history:
        * 20/04/2012: Created.
        * 12/12/2013: Re-written and adapted for the IDL_functions suite.
-       * 21/12/2013: Functionality changed (removed ROI creation and assumed the base input is already an ROI) to bring more into line with EXELISvis's version of REGION_GROW.
-       * 27/12/2013: Changed roi keyword to ROIPixels to bring into line with the keyword used by IDL.
+       * 21/12/2013: Functionality changed (removed ROI creation and
+                     assumed the base input is already an ROI) to
+                     bring more into line with EXELISvis's version of
+                     REGION_GROW.
+       * 27/12/2013: Changed roi keyword to ROIPixels to bring into
+                     line with the keyword used by IDL.
 
     :copyright:
-        Copyright (c) 2013, Josh Sixsmith
+        Copyright (c) 2014, Josh Sixsmith
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without

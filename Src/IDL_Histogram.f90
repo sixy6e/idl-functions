@@ -1,10 +1,10 @@
 MODULE idl_histogram
     IMPLICIT NONE
-    ! Author: Josh Sixsmith, joshua.sixsmith@ga.gov.au
+    ! Author: Josh Sixsmith, josh.sixsmith@gmail.com
     !
     ! Copyright
     !
-    ! Copyright (c) 2013, Josh Sixsmith
+    ! Copyright (c) 2014, Josh Sixsmith
     ! All rights reserved.
 
     ! Redistribution and use in source and binary forms, with or without

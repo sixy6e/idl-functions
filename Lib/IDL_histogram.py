@@ -65,7 +65,7 @@ def histogram(data, binsize=None, Max=None, Min=None, nbins=None, omax=None, omi
         >>> data_at_ith_bin_indices = data[ri[ri[i]:ri[i+1]]]
 
     :author:
-        Josh Sixsmith, joshua.sixsmith@ga.gov.au
+        Josh Sixsmith; josh.sixsmith@gmail.com; joshua.sixsmith@ga.gov.au
 
     :history:
        * 04/02/2013: Created
@@ -74,7 +74,7 @@ def histogram(data, binsize=None, Max=None, Min=None, nbins=None, omax=None, omi
        *  12/06/2013: Added input keyword
 
     :copyright:
-        Copyright (c) 2013, Josh Sixsmith
+        Copyright (c) 2014, Josh Sixsmith
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without

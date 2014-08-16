@@ -28,7 +28,7 @@ def array_indices(array, index, dimensions=False):
         >>> ind2D_b = array_indices(array=b.shape, index=wh[0], dimensions=True)
 
     :author:
-        Josh Sixsmith, joshua.sixsmith@ga.gov.au, josh.sixsmith@gmail.com
+        Josh Sixsmith, josh.sixsmith@gmail.com, joshua.sixsmith@ga.gov.au
 
     :history:
         * 23/10/2013: Created
@@ -37,7 +37,7 @@ def array_indices(array, index, dimensions=False):
         IDL will return an (m x n) array, with each row (n, IDL is [col,row]) containing the multi-dimensional subscripts corresponding to that index. However this function will return a tuple containing n numpy arrays, where n is the number of dimensions. This allows numpy to use the returned tuple for normal array indexing.
 
     :copyright:
-        Copyright (c) 2013, Josh Sixsmith
+        Copyright (c) 2014, Josh Sixsmith
         All rights reserved.
 
         Redistribution and use in source and binary forms, with or without
