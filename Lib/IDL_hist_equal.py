@@ -114,7 +114,7 @@ def hist_equal(array, BinSIZE=None, MaxV=None, MinV=None, Omax=None, Omin=None, 
     
         ch = cumulative_histogram
         if len(ch.shape) != 1:
-            raise Exception('Only 1D arrays are supported.')
+            raise ValueError('Only 1D arrays are supported.')
 
         # Calculate upper and lower values
         low  = (percent/100.)
@@ -187,7 +187,7 @@ def hist_equal(array, BinSIZE=None, MaxV=None, MinV=None, Omax=None, Omin=None, 
     # Evaluate a linear percent stretch
     if (Percent != None):
         if (Percent <= 0) or (Percent >= 100):
-            raise Exception('Percent must be between 0 and 100')
+            raise ValueError('Percent must be between 0 and 100')
 
         maxDN, MinDN = linear_percent(cumu_hist, percent=Percent, min_=MinV, Binsize=BinSIZE)
         scl = bytscl(array, Max=maxDN, Min=MinDN, Top=Top)
