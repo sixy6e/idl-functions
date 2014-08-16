@@ -133,7 +133,7 @@ class IDL_histogram_Tester(unittest.TestCase):
         """
         Test that inputing a 2D array will raise an error.
         """
-        self.assertRaises(Exception, histogram, self.array5)
+        self.assertRaises(ValueError, histogram, self.array5)
 
     def test_reverse_indices1(self):
         """
