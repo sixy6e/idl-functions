@@ -51,6 +51,27 @@ class IDL_array_indices_Tester(unittest.TestCase):
         test_sum    = numpy.sum(self.array_3D[ind3D])
         self.assertEqual(control_sum, test_sum)
 
+    def test_index_type(self):
+        """
+        Test that index type of not ndarray or scalar raises an error.
+        """
+        index = [5]
+        self.assertRaises(TypeError, array_indices, self.array_2D, index)
+
+    def test_index_out_of_bounds_lower(self):
+        """
+        Test that an index outside the array bounds raises an error.
+        """
+        index = -5
+        self.assertRaises(IndexError, array_indices, self.array_2D, index)
+
+    def test_index_out_of_bounds_upper(self):
+        """
+        Test that an index outside the array bounds raises an error.
+        """
+        index = 10001
+        self.assertRaises(IndexError, array_indices, self.array_2D, index)
+
 if __name__ == '__main__':
     unittest.main()
 

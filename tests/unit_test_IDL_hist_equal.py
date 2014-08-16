@@ -37,6 +37,22 @@ class IDL_hist_equal_Tester(unittest.TestCase):
         skw   = abs(stats.skew(scl_a, axis=None))
         self.assertTrue(skw <= self.error)
 
+    def test_percent_bounds_lower(self):
+        """
+        Test that an  of an unsupported datatype raises an error.
+        """
+        pct = -3
+        kwd = {'Percent': pct}
+        self.assertRaises(ValueError, hist_equal, **kwd)
+
+    def test_percent_bounds_upper(self):
+        """
+        Test that an  of an unsupported datatype raises an error.
+        """
+        pct = 101
+        kwd = {'Percent': pct}
+        self.assertRaises(ValueError, hist_equal, **kwd)
+
 if __name__ == '__main__':
     unittest.main()
 

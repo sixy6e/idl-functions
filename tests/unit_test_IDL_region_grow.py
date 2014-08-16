@@ -80,5 +80,47 @@ class IDL_region_grow_Tester(unittest.TestCase):
         total = numpy.sum(array)
         self.assertEqual(total, 255)
 
+    def test_two_dimensional(self):
+        """
+        Test that inputing a non 2D array will raise an error.
+        """
+        arr = numpy.zeros((100))
+        self.assertRaises(ValueError, region_grow, arr)
+
+    def test_roi_type1(self):
+        """
+        Test that an roi not of type list or tuple raises an error.
+        """
+        roi = {'a': 1}
+        self.assertRaises(TypeError, region_grow, self.array1, roi)
+
+    def test_roi_type2(self):
+        """
+        Test that the type contained in a roi raises an error if not an ndarray.
+        """
+        roi = [[1,2,3], [1,2,3]]
+        self.assertRaises(TypeError, region_grow, self.array1, roi)
+
+    def test_roi_length(self):
+        """
+        Test that an roi contains 2 sets of co-ordinates.
+        """
+        x = numpy.arange(9) % 3 + (pix[1] - 1)
+        roi = (x)
+        self.assertRaises(ValueError, region_grow, self.array1, roi)
+
+    def test_threshold_length(self):
+        """
+        Test that a threshold containing only a single value raises an error.
+        """
+        array = self.array1.copy()
+        pix = [50,50]
+        x = numpy.arange(9) % 3 + (pix[1] - 1)
+        y = numpy.arange(9) % 3 + (pix[0] - 1)
+        roi = (y,x)
+        threshold = [100]
+        kwds = {'array': array, 'ROIPixels': roi, 'threshold': threshold}
+        self.assertRaises(ValueError, region_grow, **kwds)
+
 if __name__ == '__main__':
     unittest.main()

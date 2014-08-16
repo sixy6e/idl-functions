@@ -76,5 +76,12 @@ class IDL_bytscl_Tester(unittest.TestCase):
         total = numpy.sum(byt)
         self.assertTrue(total != 0)
 
+    def test_datatype_error(self):
+        """
+        Test that an array of an unsupported datatype raises an error.
+        """
+        arr = numpy.zeros((10,10), dtype='complex')
+        self.assertRaises(ValueError, bytscl, arr)
+
 if __name__ == '__main__':
     unittest.main()
