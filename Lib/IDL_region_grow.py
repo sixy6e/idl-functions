@@ -114,19 +114,19 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
         return (upper,lower)
 
     if (len(array.shape) != 2):
-        raise Exception('Input array needs to be 2D in shape!')
+        raise ValueError('Input array needs to be 2D in shape!')
 
     if not ((type(ROIPixels) != list) | (type(ROIPixels) != tuple)):
-        raise Exception('ROIPixels must be of type tuple or type list containing (ndarray,ndarray) or [ndarray,ndarray]!')
+        raise TypeError('ROIPixels must be of type tuple or type list containing (ndarray,ndarray) or [ndarray,ndarray]!')
 
     if (type(ROIPixels[0]) != numpy.ndarray):
-        raise Exception('ROIPixels must be of type ndarray for tuple (ndarray,ndarray) or list [ndarray,ndarray] style of index!')
+        raise TypeError('ROIPixels must be of type ndarray for tuple (ndarray,ndarray) or list [ndarray,ndarray] style of index!')
 
     if (len(ROIPixels) != 2):
-        raise Exception('ROIPixels must be of length 2!')
+        raise ValueError('ROIPixels must be of length 2!')
 
     if (type(All_Neighbors) != bool):
-        raise Exception('All_Neighbours keyword must be of type bool!')
+        raise TypeError('All_Neighbours keyword must be of type bool!')
 
     case_of = {
                 '1' : case_one,
@@ -138,12 +138,12 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
         case = '1'
     elif (stddev_multiplier == None) & (threshold != None):
         if (len(threshold) != 2):
-            raise Exception('Threshold must be of length 2: [Min,Max]!!!')
+            raise ValueError('Threshold must be of length 2: [Min,Max]!!!')
         case = '2'
     elif (stddev_multiplier != None) & (threshold != None):
         print 'Warning!!! Both stddev_multiplier and threshold parameters are set. Using threshold.'
         if (len(threshold) != 2):
-            raise Exception('Threshold must be of length 2: [Min,Max]!!!')
+            raise ValueError('Threshold must be of length 2: [Min,Max]!!!')
         case = '2'
     else:
         case = '3'
