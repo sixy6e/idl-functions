@@ -65,7 +65,7 @@ def label_region(data, all_neighbors=False, ULong=False):
     """
 
     if data.ndim != 2:
-        raise Exception('Error. Array must be 2 dimensional.')
+        raise ValueError('Error. Array must be 2 dimensional.')
 
     if all_neighbors:
         kernel = numpy.array([[1,1,1],[1,1,1],[1,1,1]]).reshape(3,3)

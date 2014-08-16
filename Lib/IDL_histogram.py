@@ -278,10 +278,10 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
 
     dtype = datatype(data.dtype.name)
     if (dtype == 'Error'):
-       raise Exception('Error. Incompatable Data Type. Compatable Data Types Include: int8, uint8, int16, uint16, int32, uint32, int64, uint64, float32, float64')
+       raise TypeError('Error. Incompatable Data Type. Compatable Data Types Include: int8, uint8, int16, uint16, int32, uint32, int64, uint64, float32, float64')
 
     if len(data.shape) != 1:
-        raise Exception('Error. Array must be 1 dimensional. Use .flatten()')
+        raise ValueError('Error. Array must be 1 dimensional. Use .flatten()')
 
     if ((max != None) & (binsize != None) & (nbins != None)):
         raise Exception('Error. Conflicting Keywords. Max cannot be set when both binsize and nbins are set.')
@@ -338,7 +338,7 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
     max_bin = nbins * binsize + min
 
     if (binsize == 0):
-        raise Exception("Error. Binsize = 0, histogram can't be computed.")
+        raise ValueError("Error. Binsize = 0, histogram can't be computed.")
 
     # Probably unessessary to include the max and max_bin equality warning
     #if (max == max_bin):
@@ -347,12 +347,12 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
     if (input != None):
         # Check that input is 1-Dimensional
         if (len(input.shape) != 1):
-            raise Exception("Error. Input array must be 1 dimensional. Use array.flatten()")
+            raise ValueError("Error. Input array must be 1 dimensional. Use array.flatten()")
         # Check that input is at least nbins in length
         if (input.shape[0] < nbins):
             print 'Number of elements of input: ', input.shape[0]
             print 'Minimum number of elemets required: ', nbins
-            raise Exception("Error. Input array does not have enough elements.")
+            raise ValueError("Error. Input array does not have enough elements.")
 
     n = numpy.size(data)
 
