@@ -68,7 +68,7 @@ def array_indices(array, index, dimensions=False):
  
     if (type(index) != numpy.ndarray):
         if (numpy.isscalar(index) != True):
-            raise Exception('Error! Index must either be a 1D numpy array or a scalar!!!')
+            raise TypeError('Error! Index must either be a 1D numpy array or a scalar!!!')
             return
 
     if dimensions:
@@ -97,7 +97,7 @@ def array_indices(array, index, dimensions=False):
     # Negatives are legal in python, but make it harder to determine the
     # multi-dimensional index
     if ((min_ < 0) | (max_ >= nelements)):
-        raise Exception('Error. Index out of bounds!')
+        raise IndexError('Error. Index out of bounds!')
         return
 
     # 1D case; basically do nothing!
