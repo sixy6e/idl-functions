@@ -93,7 +93,7 @@ def bytscl(array, Max=None, Min=None, Top=255, NaN=False):
     elif (array.dtype in flt_types):
         rscl = numpy.floor((Top + 0.9999) * (scl - Min) / (Max - Min))
     else:
-        raise Exception('Error! Unknown datatype. Supported datatypes are int8, uint8, int16, uint16, int32, uint32, int64, uint64, float32, float64.')
+        raise ValueError('Error! Unknown datatype. Supported datatypes are int8, uint8, int16, uint16, int32, uint32, int64, uint64, float32, float64.')
 
     # Check and account for any overflow that might occur during datatype conversion
     rscl[rscl >= Top] = Top
