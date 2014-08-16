@@ -158,7 +158,7 @@ def hist_equal(array, BinSIZE=None, MaxV=None, MinV=None, Omax=None, Omin=None, 
     # Retrieve the dimensions of the array
     dims = array.shape
 
-    h = histogram(array.flatten(), binsize=BinSIZE, max=MaxV, min=MinV, omax='omax', omin='omin')
+    h = histogram(array.flatten(), binsize=BinSIZE, Max=MaxV, Min=MinV, omax='omax', omin='omin')
 
     # Need to check for omin and omax so they can be returned
     return_extra = False

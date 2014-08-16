@@ -60,7 +60,7 @@ class IDL_histogram_Tester(unittest.TestCase):
         Test that the max keyword works.
         """
         # Using an array 0->255, check that 255 gets omitted
-        h = histogram(self.array2, max=254)
+        h = histogram(self.array2, Max=254)
         self.assertEqual(h['histogram'].shape[0], 255)
         self.assertEqual((h['histogram'] == 1).sum(), 255)
 
@@ -69,7 +69,7 @@ class IDL_histogram_Tester(unittest.TestCase):
         Test that the min keyword works.
         """
         # Using an array 0->255, check that 0 gets omitted
-        h = histogram(self.array2, min=1)
+        h = histogram(self.array2, Min=1)
         self.assertEqual(h['histogram'].shape[0], 255)
         self.assertEqual((h['histogram'] == 1).sum(), 255)
 
@@ -179,8 +179,8 @@ class IDL_histogram_Tester(unittest.TestCase):
         """
         # A random floating array in range 0-20
         a = (self.array4)*20
-        # Specifying min=0 should give bin start points 0, 2.5, 5, 7.5 etc
-        h = histogram(a, reverse_indices='ri', min=0, binsize=2.5)
+        # Specifying Min=0 should give bin start points 0, 2.5, 5, 7.5 etc
+        h = histogram(a, reverse_indices='ri', Min=0, binsize=2.5)
         # Find values >= 7.5 < 17.5
         control = numpy.sort(a[(a >= 7.5) & (a < 17.5)])
         ri = h['ri']

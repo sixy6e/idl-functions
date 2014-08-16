@@ -2,7 +2,7 @@ import numpy
 import datetime
 import _idl_histogram
 
-def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omin=None, reverse_indices=None, locations=None, input=None, NaN=False):
+def histogram(data, binsize=None, Max=None, Min=None, nbins=None, omax=None, omin=None, reverse_indices=None, locations=None, input=None, NaN=False):
     """
     Replicates the histogram function avaiable within IDL (Interactive Data Language, EXELISvis).
 
@@ -12,11 +12,11 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
     :param binsize:
         (Optional) The binsize (Default is 1) to be used for creating the histogram.
 
-    :param max:
+    :param Max:
         (Optional) The maximum value to be used in creating the histogram.
         If not specified the array will be searched for max.
 
-    :param min:
+    :param Min:
         (Optional) The minimum value to be used in creating the histogram.
         If not specified the array will be searched for min.
 
@@ -58,7 +58,7 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
 
     Example:
 
-        >>> h = histogram(data, min=0, max=max, omin='omin', omax='omax', reverse_indices='ri')
+        >>> h = histogram(data, Min=0, Max=Max, omin='omin', omax='omax', reverse_indices='ri')
         >>> hist = h['histogram']
         >>> ri = h['ri']
         >>> loc = loc['ri']
@@ -102,7 +102,7 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         either expressed or implied, of the FreeBSD Project.
 
     """
-    def hist_int(data, n, min, max, binsize, nbins, max_bin, ri):
+    def hist_int(data, n, Min, Max, binsize, nbins, max_bin, ri):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the histogram. Stuff not to be included gets dumped
         # into the 1st position then removed prior to returning to the user.
@@ -110,14 +110,14 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         hist = numpy.zeros(nbins_, dtype='uint32')
 
-        _idl_histogram.idl_histogram.histogram_int(data, hist, n, nbins_, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.histogram_int(data, hist, n, nbins_, Min, Max, max_bin, binsize)
 
         if ri:
             return hist
         else:
             return hist[1:]
 
-    def hist_long(data, n, min, max, binsize, nbins, max_bin, ri):
+    def hist_long(data, n, Min, Max, binsize, nbins, max_bin, ri):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the histogram. Stuff not to be included gets dumped
         # into the 1st position then removed prior to returning to the user.
@@ -125,14 +125,14 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         hist = numpy.zeros(nbins_, dtype='uint32')
 
-        _idl_histogram.idl_histogram.histogram_long(data, hist, n, nbins_, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.histogram_long(data, hist, n, nbins_, Min, Max, max_bin, binsize)
 
         if ri:
             return hist
         else:
             return hist[1:]
 
-    def hist_dlong(data, n, min, max, binsize, nbins, max_bin, ri):
+    def hist_dlong(data, n, Min, Max, binsize, nbins, max_bin, ri):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the histogram. Stuff not to be included gets dumped
         # into the 1st position then removed prior to returning to the user.
@@ -140,14 +140,14 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         hist = numpy.zeros(nbins_, dtype='uint32')
 
-        _idl_histogram.idl_histogram.histogram_dlong(data, hist, n, nbins_, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.histogram_dlong(data, hist, n, nbins_, Min, Max, max_bin, binsize)
 
         if ri:
             return hist
         else:
             return hist[1:]
 
-    def hist_float(data, n, min, max, binsize, nbins, max_bin, ri):
+    def hist_float(data, n, Min, Max, binsize, nbins, max_bin, ri):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the histogram. Stuff not to be included gets dumped
         # into the 1st position then removed prior to returning to the user.
@@ -155,14 +155,14 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         hist = numpy.zeros(nbins_, dtype='uint32')
 
-        _idl_histogram.idl_histogram.histogram_float(data, hist, n, nbins_, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.histogram_float(data, hist, n, nbins_, Min, Max, max_bin, binsize)
 
         if ri:
             return hist
         else:
             return hist[1:]
 
-    def hist_dfloat(data, n, min, max, binsize, nbins, max_bin, ri):
+    def hist_dfloat(data, n, Min, Max, binsize, nbins, max_bin, ri):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the histogram. Stuff not to be included gets dumped
         # into the 1st position then removed prior to returning to the user.
@@ -170,14 +170,14 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         hist = numpy.zeros(nbins_, dtype='uint32')
 
-        _idl_histogram.idl_histogram.histogram_dfloat(data, hist, n, nbins_, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.histogram_dfloat(data, hist, n, nbins_, Min, Max, max_bin, binsize)
 
         if ri:
             return hist
         else:
             return hist[1:]
 
-    def ri_int(data, hist, nbins, n, ri_sz, min, max, max_bin, binsize):
+    def ri_int(data, hist, nbins, n, ri_sz, Min, Max, max_bin, binsize):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the reverse indices. Stuff not to be included gets
         # dumped into the 1st position then removed prior to returning to the
@@ -186,11 +186,11 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         ri = numpy.zeros(ri_sz, dtype='uint32')
 
-        _idl_histogram.idl_histogram.reverse_indices_int(data, hist, ri, nbins_, n, ri_sz, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.reverse_indices_int(data, hist, ri, nbins_, n, ri_sz, Min, Max, max_bin, binsize)
 
         return (hist[1:], ri[1:])
 
-    def ri_long(data, hist, nbins, n, ri_sz, min, max, max_bin, binsize):
+    def ri_long(data, hist, nbins, n, ri_sz, Min, Max, max_bin, binsize):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the reverse indices. Stuff not to be included gets
         # dumped into the 1st position then removed prior to returning to the
@@ -199,11 +199,11 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         ri = numpy.zeros(ri_sz, dtype='uint32')
 
-        _idl_histogram.idl_histogram.reverse_indices_long(data, hist, ri, nbins_, n, ri_sz, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.reverse_indices_long(data, hist, ri, nbins_, n, ri_sz, Min, Max, max_bin, binsize)
 
         return (hist[1:], ri[1:])
 
-    def ri_dlong(data, hist, nbins, n, ri_sz, min, max, max_bin, binsize):
+    def ri_dlong(data, hist, nbins, n, ri_sz, Min, Max, max_bin, binsize):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the reverse indices. Stuff not to be included gets
         # dumped into the 1st position then removed prior to returning to the
@@ -212,11 +212,11 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         ri = numpy.zeros(ri_sz, dtype='uint32')
 
-        _idl_histogram.idl_histogram.reverse_indices_dlong(data, hist, ri, nbins_, n, ri_sz, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.reverse_indices_dlong(data, hist, ri, nbins_, n, ri_sz, Min, Max, max_bin, binsize)
 
         return (hist[1:], ri[1:])
 
-    def ri_float(data, hist, nbins, n, ri_sz, min, max, max_bin, binsize):
+    def ri_float(data, hist, nbins, n, ri_sz, Min, Max, max_bin, binsize):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the reverse indices. Stuff not to be included gets
         # dumped into the 1st position then removed prior to returning to the
@@ -225,11 +225,11 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         ri = numpy.zeros(ri_sz, dtype='uint32')
 
-        _idl_histogram.idl_histogram.reverse_indices_float(data, hist, ri, nbins_, n, ri_sz, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.reverse_indices_float(data, hist, ri, nbins_, n, ri_sz, Min, Max, max_bin, binsize)
 
         return (hist[1:], ri[1:])
 
-    def ri_dfloat(data, hist, nbins, n, ri_sz, min, max, max_bin, binsize):
+    def ri_dfloat(data, hist, nbins, n, ri_sz, Min, Max, max_bin, binsize):
         # increase the size by one. When specifying a min and max, it shouldn't
         # be included in the reverse indices. Stuff not to be included gets
         # dumped into the 1st position then removed prior to returning to the
@@ -238,7 +238,7 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         nbins_ = nbins + 1
         ri = numpy.zeros(ri_sz, dtype='uint32')
 
-        _idl_histogram.idl_histogram.reverse_indices_dfloat(data, hist, ri, nbins_, n, ri_sz, min, max, max_bin, binsize)
+        _idl_histogram.idl_histogram.reverse_indices_dfloat(data, hist, ri, nbins_, n, ri_sz, Min, Max, max_bin, binsize)
 
         return (hist[1:], ri[1:])
 
@@ -283,59 +283,59 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
     if len(data.shape) != 1:
         raise ValueError('Error. Array must be 1 dimensional. Use .flatten()')
 
-    if ((max != None) & (binsize != None) & (nbins != None)):
+    if ((Max != None) & (binsize != None) & (nbins != None)):
         raise Exception('Error. Conflicting Keywords. Max cannot be set when both binsize and nbins are set.')
 
     if ((input != None) & (reverse_indices != None)):
         raise Exception('Error. Conflicting Keywords. Both input and reverse_indices cannot be set at the same time.')
 
-    if (max == None):
+    if (Max == None):
         if NaN:
-            max = numpy.nanmax(data)
+            Max = numpy.nanmax(data)
         else:
-            max = numpy.max(data)
+            Max = numpy.max(data)
 
-    if (min == None):
+    if (Min == None):
         if NaN:
-            min = numpy.nanmin(data)
+            Min = numpy.nanmin(data)
         else:
-            min = numpy.min(data)
+            Min = numpy.min(data)
 
-    min = data_convert(data.dtype.name, min)
-    max = data_convert(data.dtype.name, max)
+    Min = data_convert(data.dtype.name, Min)
+    Max = data_convert(data.dtype.name, Max)
 
     if (binsize == None) & (nbins == None):
         #print 'binsize=None & nbins=None'
         binsize = 1
-        nbins = (max - min) + 1
+        nbins = (Max - Min) + 1
     elif (binsize == None):
         #print 'binsize=None & nbins= ', nbins
-        binsize = (max - min) / (nbins - 1)
-        max = nbins * binsize + min
+        binsize = (Max - Min) / (nbins - 1)
+        Max = nbins * binsize + Min
     elif (binsize != None) & (nbins == None):
         #print 'binsize= ', binsize, 'nbins=None'
-        nbins = numpy.floor((max - min) / binsize) + 1
+        nbins = numpy.floor((Max - Min) / binsize) + 1
     else:
         #print 'binsize= ', binsize, 'nbins= ', nbins
-        max = nbins * binsize + min
+        Max = nbins * binsize + Min
 
     binsize = data_convert(data.dtype.name, binsize)
-    min = data_convert(data.dtype.name, min)
+    Min = data_convert(data.dtype.name, Min)
 
     # If nbins is set to 256 and the array datatype is uint8, then the max
     # value will be adjusted to 256, however due to datatype conversions, the
     # max value of 256 will change to 0
     # This fix conforms with IDL.
-    if ((max == 256) & (data.dtype.name == 'uint8')):
-        max = 255
-    max = data_convert(data.dtype.name, max)
+    if ((Max == 256) & (data.dtype.name == 'uint8')):
+        Max = 255
+    Max = data_convert(data.dtype.name, Max)
 
     #probably also need to pass in a max binvalue into the fortran code
     # the max bin value is non-inclusive, but also check that the data
     #values are <= the max value
     # eg max value = 1.0, but max bin = 1.08, therefore a value of 1.04
     # will not be included
-    max_bin = nbins * binsize + min
+    max_bin = nbins * binsize + Min
 
     if (binsize == 0):
         raise ValueError("Error. Binsize = 0, histogram can't be computed.")
@@ -378,7 +378,7 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         ri = True
         #print 'Creating histogram'
         #st = datetime.datetime.now()
-        hist = get_hist[data.dtype.name](data, n, min, max, binsize, nbins, max_bin, ri)
+        hist = get_hist[data.dtype.name](data, n, Min, Max, binsize, nbins, max_bin, ri)
         #et = datetime.datetime.now()
         #print 'histogram time taken: ', et - st
         cum_sum = numpy.sum(hist[1:])
@@ -400,7 +400,7 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
                    'float64' : ri_dfloat,
                   }
         #print 'get reverse indices'
-        hri = get_ri[data.dtype.name](data, hist, nbins, n, ri_sz, min, max, max_bin, binsize)
+        hri = get_ri[data.dtype.name](data, hist, nbins, n, ri_sz, Min, Max, max_bin, binsize)
 
         results = {'histogram': hri[0]}
         results[reverse_indices] = hri[1]
@@ -409,7 +409,7 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
     else:
         #print 'Creating histogram'
         #st = datetime.datetime.now()
-        hist = get_hist[data.dtype.name](data, n, min, max, binsize, nbins, max_bin, ri)
+        hist = get_hist[data.dtype.name](data, n, Min, Max, binsize, nbins, max_bin, ri)
         #et = datetime.datetime.now()
         if (input != None):
             # Now to add the input array to the histogram.
@@ -427,15 +427,15 @@ def histogram(data, binsize=None, max=None, min=None, nbins=None, omax=None, omi
         #print 'histogram time taken: ', et - st
 
     if (type(omax) == str):
-        results[omax] = max
+        results[omax] = Max
 
     if (type(omin) == str):
-        results[omin] = min
+        results[omin] = Min
 
     if (type(locations) == str):
         loc = numpy.zeros(nbins, dtype=data.dtype.name)
         for i in numpy.arange(nbins):
-            loc[i] = min + i * binsize
+            loc[i] = Min + i * binsize
 
         results[locations] = loc
 

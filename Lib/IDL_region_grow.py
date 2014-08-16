@@ -176,7 +176,7 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
     ulabels = (numpy.unique(labels[labels > 0])).tolist() # Convert to list; Makes for neater indexing
 
     # Generate a histogram to find the label locations
-    h = histogram(label_array.flatten(), min=0, max=mx_lab, reverse_indices='ri')
+    h = histogram(label_array.flatten(), Min=0, Max=mx_lab, reverse_indices='ri')
     hist = h['histogram']
     ri = h['ri']
 
