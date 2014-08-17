@@ -120,7 +120,7 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
     if (len(array.shape) != 2):
         raise ValueError('Input array needs to be 2D in shape!')
 
-    if not ((type(ROIPixels) != list) | (type(ROIPixels) != tuple)):
+    if not ((type(ROIPixels) == list) | (type(ROIPixels) == tuple)):
         raise TypeError('ROIPixels must be of type tuple or type list containing (ndarray,ndarray) or [ndarray,ndarray]!')
 
     if (type(ROIPixels[0]) != numpy.ndarray):
