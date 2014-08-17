@@ -85,7 +85,11 @@ class IDL_region_grow_Tester(unittest.TestCase):
         Test that inputing a non 2D array will raise an error.
         """
         arr = numpy.zeros((100))
-        self.assertRaises(ValueError, region_grow, arr)
+        pix = [11,11]
+        x = numpy.arange(9) % 3 + (pix[1] - 1)
+        y = numpy.arange(9) % 3 + (pix[0] - 1)
+        roi = (y,x)
+        self.assertRaises(ValueError, region_grow, arr, roi)
 
     def test_roi_type1(self):
         """
@@ -105,8 +109,9 @@ class IDL_region_grow_Tester(unittest.TestCase):
         """
         Test that an roi contains 2 sets of co-ordinates.
         """
+        pix = [11,11]
         x = numpy.arange(9) % 3 + (pix[1] - 1)
-        roi = (x)
+        roi = (x,)
         self.assertRaises(ValueError, region_grow, self.array1, roi)
 
     def test_threshold_length(self):
