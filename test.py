@@ -36,9 +36,14 @@ if __name__ == '__main__':
         os.chdir(os.pardir)
 
         # Now execute the unittest script from the command line
+        print "Testing IDL_histogram"
         subprocess.call(['python', test_file1])
+        print "Testing IDL_hist_equal"
         subprocess.call(['python', test_file2])
+        print "Testing IDL_array_indices"
         subprocess.call(['python', test_file3])
+        print "Testing IDL_bytscl"
         subprocess.call(['python', test_file4])
+        print "Testing IDL_region_grow"
         subprocess.call(['python', test_file5])
 
