@@ -58,7 +58,7 @@ def histogram(data, binsize=None, Max=None, Min=None, nbins=None, omax=None, omi
 
     Example:
 
-        >>> h = histogram(data, Min=0, Max=Max, omin='omin', omax='omax', reverse_indices='ri')
+        >>> h = histogram(data, Min=0, omin='omin', omax='omax', reverse_indices='ri')
         >>> hist = h['histogram']
         >>> ri = h['ri']
         >>> loc = loc['ri']
