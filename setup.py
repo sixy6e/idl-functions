@@ -30,7 +30,7 @@ extra_compile_args=['--fcompiler=gnu95']
 setup(name="IDL_functions", # name of the package to import later
       version='0.1',
       author='Josh Sixsmith',
-      author_email='joshua.sixsmith@ga.gov.au, josh.sixsmith@gmail.com',
+      author_email='josh.sixsmith@gmail.com, joshua.sixsmith@ga.gov.au',
       # Build fortran wrappers, uses f2py
       #ext_modules = [Extension('_idl_histogram', ['Src/IDL_Histogram.f90'],
       #                          files,
