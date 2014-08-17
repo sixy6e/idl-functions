@@ -42,16 +42,16 @@ class IDL_hist_equal_Tester(unittest.TestCase):
         Test that an  of an unsupported datatype raises an error.
         """
         pct = -3
-        kwd = {'Percent': pct}
-        self.assertRaises(ValueError, hist_equal, **kwd)
+        kwds = {'array': self.array, 'Percent': pct}
+        self.assertRaises(ValueError, hist_equal, **kwds)
 
     def test_percent_bounds_upper(self):
         """
         Test that an  of an unsupported datatype raises an error.
         """
         pct = 101
-        kwd = {'Percent': pct}
-        self.assertRaises(ValueError, hist_equal, **kwd)
+        kwds = {'array': self.array, 'Percent': pct}
+        self.assertRaises(ValueError, hist_equal, **kwds)
 
 if __name__ == '__main__':
     unittest.main()
