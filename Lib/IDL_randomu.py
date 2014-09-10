@@ -3,8 +3,10 @@
 from numpy.random import RandomState
 from numpy.random import mtrand
 
+#def randomu(seed, di=None, Binomial=None, Double=False, Gamma=False,
+#            Long=False, Normal=False, Poisson=False, ULong=False):
 def randomu(seed, di=None, Binomial=None, Double=False, Gamma=False,
-            Long=False, Normal=False, Poisson=False, ULong=False):
+            Normal=False, Poisson=False):
     """
     Replicates the randomu function avaiable within IDL
     (Interactive Data Language, EXELISvis).
@@ -67,10 +69,6 @@ def randomu(seed, di=None, Binomial=None, Double=False, Gamma=False,
     # Initialise the data type
     if Double:
         dtype = 'float64'
-    elif Long:
-        dtype = 'int32'
-    elif ULong:
-        dtype = 'uint32'
     else:
         dtype = 'float32'
 
@@ -88,6 +86,21 @@ def randomu(seed, di=None, Binomial=None, Double=False, Gamma=False,
         dims = di[::-1]
     else:
         dims = 1
+
+    # Python has issues with overflow:
+    # OverflowError: Python int too large to convert to C long
+    # Occurs with Long and ULong
+    #if Long:
+    #    res = seed.random_integers(0, 2**31-1, dims)
+    #    if di is None:
+    #        res = res[0]
+    #    return res, seed
+
+    #if ULong:
+    #    res = seed.random_integers(0, 2**32-1, dims)
+    #    if di is None:
+    #        res = res[0]
+    #    return res, seed
 
     # Check for other keywords
     distributions = 0
