@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+import os
 import unittest
 import numpy
 
@@ -21,7 +22,7 @@ class IDL_randomu_Tester(unittest.TestCase):
 
         x, seed = randomu(seed)
 
-        self.AsserTrue(numpy.isscalar(x))
+        self.assertTrue(numpy.isscalar(x))
 
     def test_dimension_columns(self):
         """
@@ -32,11 +33,11 @@ class IDL_randomu_Tester(unittest.TestCase):
 
         in_rows,in_cols = arr.shape
 
-        in_dims = (in_cols,in_rows)
+        in_dims = [in_cols,in_rows]
 
         seed = None
 
-        x, seed = randomu(sd, in_dims)
+        x, seed = randomu(seed, in_dims)
 
         out_rows,out_cols = x.shape
 
@@ -51,11 +52,11 @@ class IDL_randomu_Tester(unittest.TestCase):
 
         in_rows,in_cols = arr.shape
 
-        in_dims = (in_cols,in_rows)
+        in_dims = [in_cols,in_rows]
 
         seed = None
 
-        x, seed = randomu(sd, in_dims)
+        x, seed = randomu(seed, in_dims)
 
         out_rows,out_cols = x.shape
 
@@ -95,3 +96,5 @@ class IDL_randomu_Tester(unittest.TestCase):
 
         self.assertRaises(ValueError, randomu, **kwds)
 
+if __name__ == '__main__':
+    unittest.main()
