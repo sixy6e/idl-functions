@@ -64,6 +64,53 @@ def randomu(seed, di=None, Binomial=None, Double=False, Gamma=False,
         If set to True, then randomu will return unsigned integer
         uniform deviates in the range [0..2^32-1], using the Mersenne
         Twister algorithm. All other keywords will be ignored.
+
+    :return:
+        A NumPy array of uniformly distributed random numbers of the
+        specified dimensions.
+
+    Example:
+        >>> seed = None
+        >>> x, sd = randomu(seed, [10,10])
+        >>> x, sd = randomu(seed, [100,100], Binomial=[10,0.5])
+        >>> x, sd = randomu(seed, [100,100], Gamma=2)
+        >>> # 200x by 100y array of normally distributed values
+        >>> x, sd = randomu(seed, [200,100], Normal=True)
+        >>> # 1000 deviates from a Poisson distribution with a mean of 1.5
+        >>> x, sd = randomu(seed, [1000], Poisson=1.5)
+        >>> # Return a scalar from a uniform distribution
+        >>> x, sd = randomu(seed)
+
+    :author:
+        Josh Sixsmith, josh.sixsmith@gmail.com, joshua.sixsmith@ga.gov.au
+
+    :copyright:
+        Copyright (c) 2014, Josh Sixsmith
+        All rights reserved.
+
+        Redistribution and use in source and binary forms, with or without
+        modification, are permitted provided that the following conditions are met:
+
+        1. Redistributions of source code must retain the above copyright notice, this
+           list of conditions and the following disclaimer.
+        2. Redistributions in binary form must reproduce the above copyright notice,
+           this list of conditions and the following disclaimer in the documentation
+           and/or other materials provided with the distribution.
+
+        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+        ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+        WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+        ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+        (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+        LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+        ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+        (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+        SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+        The views and conclusions contained in the software and documentation are those
+        of the authors and should not be interpreted as representing official policies,
+        either expressed or implied, of the FreeBSD Project.
     """
 
     # Initialise the data type
