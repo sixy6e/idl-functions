@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import numpy
 from numpy.random import RandomState
 from numpy.random import mtrand
 
@@ -108,7 +107,7 @@ def randomu(seed, di=None, Binomial=None, Double=False, Gamma=False,
         n = Binomial[0]
         p = Binomial[1]
 
-        res = seed.binomial(n, b, dims)
+        res = seed.binomial(n, p, dims)
 
     elif Gamma:
         res = seed.gamma(Gamma, size=dims)
