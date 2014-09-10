@@ -81,9 +81,9 @@ def randomu(seed, di=None, Binomial=None, Double=False, Gamma=False,
 
     if di is not None:
         if type(di) is not list:
-            print "Dimensions must be a list."
+            raise TypeError("Dimensions must be a list or None.")
         if len(di) > 8:
-            print "Can't be more than 8 dimensions."
+            raise ValueError("Error. More than 8 dimensions specified.")
         # Invert the dimensions list
         dims = di[::-1]
     else:
@@ -102,7 +102,7 @@ def randomu(seed, di=None, Binomial=None, Double=False, Gamma=False,
 
     if Binomial:
         if len(Binomial) != 2:
-            print "Binomial must contain [n,p] trials & probability."
+            raise ValueError("Error. Binomial must contain [n,p] trials & probability.")
 
         n = Binomial[0]
         p = Binomial[1]
