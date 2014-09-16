@@ -209,7 +209,7 @@ def hist_equal(array, BinSIZE=None, MaxV=None, MinV=None, Omax=None, Omin=None, 
         # Clip the lower bounds
         arr = array.clip(min=MinV)
         arr = numpy.floor((arr - MinV) / BinSIZE).astype('int')
-        scl = (scl_lookup[arr.flatten()]).reshape(dims)
+        scl = (scl_lookup[arr.ravel()]).reshape(dims)
 
     if return_extra:
         return scl, d
