@@ -133,9 +133,14 @@ class IDL_histogram_Tester(unittest.TestCase):
 
     def test_two_dimensional(self):
         """
-        Test that inputing a 2D array will raise an error.
+        Test that inputing a 2D array will return the same histogram
+        if it were 1D.
         """
-        self.assertRaises(ValueError, histogram, self.array5)
+        arr_cp = self.array5.flatten()
+        hist1 = histogram(self.array5)
+        hist2 = histogram(arr_cp)
+        diff = numpy.sum(hist1['histogram'] - hist2['histogram'])
+        self.assertEqual(diff, 0)
 
     def test_reverse_indices1(self):
         """
