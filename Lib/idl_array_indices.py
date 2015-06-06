@@ -1,22 +1,31 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
+
 import numpy
 
 def array_indices(array, index, dimensions=False):
     """
-    Replicates the array_indices function available within IDL (Interactive Data Language, EXELISvis).
-    Converts one-dimensional subscripts of an array into corresponding multi-dimensional subscripts.
+    Replicates the array_indices function available within IDL
+    (Interactive Data Language, EXELISvis).
+    Converts one-dimensional subscripts of an array into corresponding
+    multi-dimensional subscripts.
 
     :param array:
-        A numpy array of any type, whose dimensions should be used in converting the subscripts. If dimensions is set to True then array should be a list or tuple containing the dimensions.
+        A numpy array of any type, whose dimensions should be used in
+        converting the subscripts. If dimensions is set to True then
+        array should be a list or tuple containing the dimensions.
 
     :param index:
-        A scalar or 1D numpy array containing the one-dimensional subscripts to be converted.
+        A scalar or 1D numpy array containing the one-dimensional
+        subscripts to be converted.
 
     :param dimensions:
-        If set to True, then array should be a list or tuple containing the dimensions. Default is False. Dimensions are retrieved by array.shape.
+        If set to True, then array should be a list or tuple containing
+        the dimensions. Default is False. Dimensions are retrieved by
+        array.shape.
 
     :return:
-        A tuple of numpy 1D arrays containing the multi-dimensional subscripts.
+        A tuple of numpy 1D arrays containing the multi-dimensional
+        subscripts.
 
     Example:
 
@@ -34,7 +43,11 @@ def array_indices(array, index, dimensions=False):
         * 23/10/2013: Created
 
     :notes:
-        IDL will return an (m x n) array, with each row (n, IDL is [col,row]) containing the multi-dimensional subscripts corresponding to that index. However this function will return a tuple containing n numpy arrays, where n is the number of dimensions. This allows numpy to use the returned tuple for normal array indexing.
+        IDL will return an (m x n) array, with each row (n, IDL is [col,row])
+        containing the multi-dimensional subscripts corresponding to that
+        index. However this function will return a tuple containing
+        `n` numpy arrays, where `n` is the number of dimensions. This allows
+         numpy to use the returned tuple for normal array indexing.
 
     :copyright:
         Copyright (c) 2014, Josh Sixsmith
@@ -68,25 +81,27 @@ def array_indices(array, index, dimensions=False):
  
     if (type(index) != numpy.ndarray):
         if (numpy.isscalar(index) != True):
-            raise TypeError('Error! Index must either be a 1D numpy array or a scalar!!!')
+            msg = ("Error! "
+                   "Index must either be a 1D numpy array or a scalar!!!")
+            raise TypeError(msg)
             return
 
     if dimensions:
-        dims        = array
+        dims = array
         ndimensions = len(dims)
-        nelements   = numpy.prod(numpy.array(dims))
+        nelements = numpy.prod(numpy.array(dims))
     else:
-        dims        = array.shape
+        dims = array.shape
         ndimensions = len(dims)
-        nelements   = numpy.prod(numpy.array(dims))
+        nelements = numpy.prod(numpy.array(dims))
 
     if (len(dims) == 3):
-        rows  = dims[1]
-        cols  = dims[2]
+        rows = dims[1]
+        cols = dims[2]
         bands = dims[0]
     elif (len(dims) == 2):
-        rows  = dims[0]
-        cols  = dims[1]
+        rows = dims[0]
+        cols = dims[1]
         bands = 0
 
     # Calculate min and max for bounds checking
@@ -100,23 +115,23 @@ def array_indices(array, index, dimensions=False):
         raise IndexError('Error. Index out of bounds!')
         return
 
-    # 1D case; basically do nothing!
+    # 1D case; basically do nothing
     if (ndimensions <= 1):
         return index
-    # 2D case;
+    # 2D case
     elif (ndimensions == 2):
         r   = index / cols
         c   = index % cols
         ind = (r,c)
         return ind
-    # 3D case;
+    # 3D case
     elif (ndimensions == 3):
         b   = index / (cols * rows)
         r   = (index % (cols * rows)) / cols
         c   = index % cols
         ind = (b,r,c)
         return ind
-    # Higher D order;
+    # Higher D order
     else:
         dims_rv = dims[::-1]
         i = 1
@@ -136,4 +151,3 @@ def array_indices(array, index, dimensions=False):
         idx.append(index % dims[-1])
         ind = tuple(idx)
         return ind
-

@@ -2,30 +2,42 @@
 
 import numpy
 from scipy import ndimage
-from IDL_functions import histogram
-from IDL_functions import array_indices
+from idl_functions import histogram
+from idl_functions import array_indices
+from idl_functions import label_region
 
-def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, threshold=None):
+
+def region_grow(array, roipixels, stddev_multiplier=None, all_neighbors=False,
+                threshold=None):
     """
-    Grows an ROI (Region of Interest) for a given array.
+    Grows an roi (Region of Interest) for a given array.
 
-    Replicates IDL's REGION_GROW function (Interactive Data Language, EXELISvis).
-    The ROI is used to generate statistical thresholds by which to grow connected pixels. 
+    Replicates IDL's REGION_GROW function
+    (Interactive Data Language, EXELISvis).
+    The roi is used to generate statistical thresholds by which to grow
+    connected pixels. 
 
     :param array:
         A single 2D numpy array.
 
-    :param ROIPixels:
-        A tuple containing a the location of a single pixel, or multiple pixel locations.
+    :param roipixels:
+        A tuple containing a the location of a single pixel, or
+        multiple pixel locations.
 
     :param stddev_multiplier:
-        A value containing the standard deviation multiplier that defines the upper and lower threshold limits. Defaulted to None, in which case the min and max will be used as defining threshold limits.
+        A value containing the standard deviation multiplier that
+        defines the upper and lower threshold limits. Defaulted to
+        `None`, in which case the min and max will be used as
+        defining threshold limits.
 
-    :param All_Neighbors:
-        If set to True, then all 8 neighbours will be used to search for connectivity. Defaults to False (only the 4 immediate neighbours are used for connectivity).
+    :param all_neighbors:
+        If set to True, then all 8 neighbours will be used to search
+        for connectivity. Defaults to False
+        (only the 4 immediate neighbours are used for connectivity).
  
     :return:
-        A tuple of (y,x) 1D numpy arrays containing image co-ordinates of the grown regions.
+        A tuple of (y,x) 1D numpy arrays containing image co-ordinates
+        of the grown regions.
 
     Example:
 
@@ -34,7 +46,7 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
         >>> x = numpy.arange(9) % 3 + (pix[1] - 1)
         >>> y = numpy.arange(9) % 3 + (pix[0] - 1)
         >>> roi = (y,x)
-        >>> grown_region = region_grow(array, roi, stddev_multiplier=2.5, All_Neighbors=True)
+        >>> grown_region = region_grow(array, roi, stddev_multiplier=2.5, all_neighbors=True)
 
     :author:
         Josh Sixsmith; josh.sixsmith@gmail.com; joshua.sixsmith@ga.gov.au
@@ -42,11 +54,11 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
     :history:
        * 20/04/2012: Created.
        * 12/12/2013: Re-written and adapted for the IDL_functions suite.
-       * 21/12/2013: Functionality changed (removed ROI creation and
-                     assumed the base input is already an ROI) to
+       * 21/12/2013: Functionality changed (removed roi creation and
+                     assumed the base input is already an roi) to
                      bring more into line with EXELISvis's version of
                      REGION_GROW.
-       * 27/12/2013: Changed roi keyword to ROIPixels to bring into
+       * 27/12/2013: Changed roi keyword to roipixels to bring into
                      line with the keyword used by IDL.
 
     :copyright:
@@ -79,38 +91,42 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
 
     """
 
-    def case_one(array=None, ROI=None, threshold=None, stddev_multiplier=None):
+    def case_one(array=None, roi=None, threshold=None, stddev_multiplier=None):
         """
-        Calculates the upper and lower thresholds based on an ROI of array.
+        Calculates the upper and lower thresholds based on an roi of array.
         """
-        upper = numpy.max(array[ROI])
-        lower = numpy.min(array[ROI])
+        upper = numpy.max(array[roi])
+        lower = numpy.min(array[roi])
 
         return (upper,lower)
 
-    def case_two(array=None, ROI=None, threshold=None, stddev_multiplier=None):
+    def case_two(array=None, roi=None, threshold=None, stddev_multiplier=None):
         """
-        No calculation, simply returns the upper and lower thresholds based on given threshold paramater.
+        No calculation, simply returns the upper and lower thresholds
+        based on given threshold paramater.
         """
         upper = threshold[1]
         lower = threshold[0]
 
         return (upper,lower)
 
-    def case_three(array=None, ROI=None, threshold=None, stddev_multiplier=None):
+    def case_three(array=None, roi=None, threshold=None,
+                   stddev_multiplier=None):
         """
-        Calculates the upper and lower thresholds via the ROI of an array and a standard deviation multiplier.
+        Calculates the upper and lower thresholds via the roi of an
+        array and a standard deviation multiplier.
         """
 
-        # For the case of a single pixel ROI, the standard deviation would be undefined
+        # For the case of a single pixel roi, the standard deviation would be
+        # undefined.
         # So set the mean to equal the pixel value and stdv to 0.0
-        if (ROI[0].shape == 1):
-            mean = array[ROI]
+        if (roi[0].shape == 1):
+            mean = array[roi]
             stdv = 0.0
         else:
-            stdv  = numpy.std(array[ROI], ddof=1) # Sample standard deviation
+            stdv  = numpy.std(array[roi], ddof=1) # Sample standard deviation
             limit = stddev_multiplier * stdv
-            mean  = numpy.mean(array[ROI])
+            mean  = numpy.mean(array[roi])
 
         upper = mean + limit
         lower = mean - limit
@@ -120,23 +136,25 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
     if (len(array.shape) != 2):
         raise ValueError('Input array needs to be 2D in shape!')
 
-    if not ((type(ROIPixels) == list) | (type(ROIPixels) == tuple)):
-        raise TypeError('ROIPixels must be of type tuple or type list containing (ndarray,ndarray) or [ndarray,ndarray]!')
+    if not ((type(roipixels) == list) | (type(roipixels) == tuple)):
+        msg = ("Roipixels must be of type tuple or type list containing "
+               "(ndarray,ndarray) or [ndarray,ndarray]!")
+        raise TypeError(msg)
 
-    if (type(ROIPixels[0]) != numpy.ndarray):
-        raise TypeError('ROIPixels must be of type ndarray for tuple (ndarray,ndarray) or list [ndarray,ndarray] style of index!')
+    if (type(roipixels[0]) != numpy.ndarray):
+        msg = ("Roipixels must be of type ndarray for tuple (ndarray,ndarray) "
+               "or list [ndarray,ndarray] style of index!")
+        raise TypeError(msg)
 
-    if (len(ROIPixels) != 2):
-        raise ValueError('ROIPixels must be of length 2!')
+    if (len(roipixels) != 2):
+        raise ValueError('Roipixels must be of length 2!')
 
-    if (type(All_Neighbors) != bool):
-        raise TypeError('All_Neighbours keyword must be of type bool!')
+    if (type(all_neighbors) != bool):
+        raise TypeError('all_neighbors keyword must be of type bool!')
 
-    case_of = {
-                '1' : case_one,
-                '2' : case_two,
-                '3' : case_three,
-              }
+    case_of = {'1': case_one,
+               '2': case_two,
+               '3': case_three}
 
     if (stddev_multiplier == None) & (threshold == None):
         case = '1'
@@ -145,18 +163,14 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
             raise ValueError('Threshold must be of length 2: [Min,Max]!!!')
         case = '2'
     elif (stddev_multiplier != None) & (threshold != None):
-        print 'Warning!!! Both stddev_multiplier and threshold parameters are set. Using threshold.'
+        msg = ("Warning!!! Both stddev_multiplier and threshold parameters "
+               "are set. Using threshold.")
+        print msg
         if (len(threshold) != 2):
             raise ValueError('Threshold must be of length 2: [Min,Max]!!!')
         case = '2'
     else:
         case = '3'
-
-    # Create the structure for the labeling procedure
-    if All_Neighbors:
-        s = [[1,1,1],[1,1,1],[1,1,1]]
-    else:
-        s = [[0,1,0],[1,1,1],[0,1,0]]
 
     # Get the array dimensions
     dims = array.shape
@@ -165,22 +179,24 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
     idx = []
 
     # Get the upper and lower limits to generate the mask
-    upper, lower = case_of[case](array, ROIPixels, threshold=threshold, stddev_multiplier=stddev_multiplier)
+    upper, lower = case_of[case](array, roipixels, threshold=threshold,
+                                 stddev_multiplier=stddev_multiplier)
 
     # Create the mask via the thresholds
     mask = (array >= lower) & (array <= upper)
 
     # The label function segments the image into contiguous blobs
-    label_array, num_labels = ndimage.label(mask, structure=s)
+    label_array = label_region(mask, all_neighbors=all_neighbors)
 
-    # Find the labels associated with the ROI
-    labels  = label_array[ROIPixels]
-    mx_lab  = numpy.max(labels)
+    # Find the labels associated with the roi
+    labels = label_array[roipixels]
+    mx_lab = numpy.max(labels)
+
     # Find unique labels, excluding zero (background)
-    ulabels = (numpy.unique(labels[labels > 0])).tolist() # Convert to list; Makes for neater indexing
+    ulabels = (numpy.unique(labels[labels > 0])).tolist()
 
     # Generate a histogram to find the label locations
-    h = histogram(label_array.flatten(), Min=0, Max=mx_lab, reverse_indices='ri')
+    h = histogram(label_array, minv=0, maxv=mx_lab, reverse_indices='ri')
     hist = h['histogram']
     ri = h['ri']
 
@@ -193,4 +209,3 @@ def region_grow(array, ROIPixels, stddev_multiplier=None, All_Neighbors=False, t
     idx = array_indices(dims, idx, dimensions=True)
 
     return idx
-

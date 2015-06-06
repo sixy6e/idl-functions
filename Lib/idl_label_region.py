@@ -1,8 +1,10 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
+
 import numpy
 from scipy import ndimage
 
-def label_region(data, all_neighbors=False, ULong=False):
+
+def label_region(data, all_neighbors=False, ulong=False):
     """
     Replicates the label_region function avaiable within IDL
     (Interactive Data Language, EXELISvis).
@@ -17,7 +19,7 @@ def label_region(data, all_neighbors=False, ULong=False):
         determine connectivity. Default is False, only the 4 immediate
         neighbors of a pixel are used to determnine connectiviy.
 
-    :param ULong:
+    :param ulong:
         If set to True then the output array will be an 32 bit unsinged
         long integer. Default is False, and the output will be a 16 bit
         unsinged integer. Use this keyword if you expect > 65525 regions.
@@ -66,7 +68,6 @@ def label_region(data, all_neighbors=False, ULong=False):
         of the authors and should not be interpreted as representing official policies, 
         either expressed or implied, of the FreeBSD Project.
     """
-
     if data.ndim != 2:
         raise ValueError('Error. Array must be 2 dimensional.')
 
@@ -75,7 +76,7 @@ def label_region(data, all_neighbors=False, ULong=False):
     else:
         kernel = numpy.array([[0,1,0],[1,1,1],[0,1,0]]).reshape(3,3)
 
-    if ULong:
+    if ulong:
         result = numpy.zeros(data.shape, dtype='UInt32')
     else:
         result = numpy.zeros(data.shape, dtype='UInt16')
@@ -84,4 +85,3 @@ def label_region(data, all_neighbors=False, ULong=False):
     nfeatures = ndimage.label(data, structure=kernel, output=result)
 
     return result
-

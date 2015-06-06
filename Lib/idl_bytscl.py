@@ -1,29 +1,36 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 
 import numpy
 
-def bytscl(array, Max=None, Min=None, Top=255, NaN=False):
+
+def bytscl(array, maxv=None, minv=None, top=255, nan=False):
     """
-    Replicates the bytscl function available within IDL (Interactive Data Language, EXELISvis).
-    Scales all values of array in the range (Min <= value <= Max) to (0 <= scl_value <= Top).
+    Replicates the bytscl function available within IDL
+    (Interactive Data Language, EXELISvis).
+    Scales all values of array in the range
+    (minv <= value <= maxv) to (0 <= scl_value <= top).
 
     :param array:
         A numpy array of any type.
 
-    :param Max:
-        The maximum data value to be considered. Otherwise the maximum data value of array is used.
+    :param maxv:
+        The maximum data value to be considered.
+        Otherwise the maximum data value of array is used.
 
-    :param Min:
-        The minimum data value to be considered. Otherwise the minimum data value of array is used.
+    :param minv:
+        The minimum data value to be considered.
+        Otherwise the minimum data value of array is used.
 
-    :param Top:
-        The maximum value of the scaled result. Default is 255. The mimimum value of the scaled result is always 0.
+    :param top:
+        The maximum value of the scaled result. Default is 255.
+        The mimimum value of the scaled result is always 0.
 
-    :param NaN:
+    :param nan:
         type Bool. If set to True, then NaN values will be ignored.
 
     :return:
-        A numpy array of type byte (uint8) with the same dimensions as the input array.
+        A numpy array of type byte (uint8) with the same dimensions
+        as the input array.
 
     Example:
 
@@ -66,38 +73,44 @@ def bytscl(array, Max=None, Min=None, Top=255, NaN=False):
 
     """
 
-    if (Max == None):
-        if (NaN):
-            Max = numpy.nanmax(array)
+    if (maxv == None):
+        if (nan):
+            maxv = numpy.nanmax(array)
         else:
-            Max = numpy.amax(array)
+            maxv = numpy.amax(array)
 
-    if (Min == None):
-        if (NaN):
-            Min = numpy.nanmin(array)
+    if (minv == None):
+        if (nan):
+            minv = numpy.nanmin(array)
         else:
-            Min = numpy.amin(array)
+            minv = numpy.amin(array)
 
-    if (Top > 255):
-        Top = 255
+    if (top > 255):
+        top = 255
 
     scl = array.copy()
-    scl[scl >= Max] = Top
-    scl[scl <= Min] = 0
+    scl[scl >= maxv] = top
+    scl[scl <= minv] = 0
 
-    int_types = ['int', 'int8', 'int16', 'int32', 'int64', 'uint8', 'uint16', 'uint32', 'uint64']
+    int_types = ['int', 'int8', 'int16', 'int32', 'int64', 'uint8', 'uint16',
+                 'uint32', 'uint64']
     flt_types = ['float', 'float16', 'float32', 'float64']
 
     if (array.dtype in int_types):
-        rscl = numpy.floor(((Top + 1.) * (scl - Min) - 1.) / (Max - Min))
+        rscl = numpy.floor(((top + 1.) * (scl - minv) - 1.) / (maxv - minv))
     elif (array.dtype in flt_types):
-        rscl = numpy.floor((Top + 0.9999) * (scl - Min) / (Max - Min))
+        rscl = numpy.floor((top + 0.9999) * (scl - minv) / (maxv - minv))
     else:
-        raise ValueError('Error! Unknown datatype. Supported datatypes are int8, uint8, int16, uint16, int32, uint32, int64, uint64, float32, float64.')
+        msg = ("Error! Unknown datatype. "
+               "Supported datatypes are: "
+               "int8, uint8, int16, uint16, int32, uint32, int64, uint64, "
+               "float32, float64.")
+        raise ValueError(msg)
 
-    # Check and account for any overflow that might occur during datatype conversion
-    rscl[rscl >= Top] = Top
+    # Check and account for any overflow that might occur during
+    # datatype conversion
+    rscl[rscl >= top] = Top
     rscl[rscl < 0] = 0
     scl = rscl.astype('uint8')
-    return scl
 
+    return scl
