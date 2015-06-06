@@ -19,7 +19,7 @@ class IDL_region_grow_Tester(unittest.TestCase):
         self.array1 = numpy.zeros((100, 100))
         self.array2 = numpy.random.randint(100, 201, (10, 10))
         self.array3 = numpy.random.randint(10, 31, (100, 100))
-        self.array4 = numpy.array([[10, 20, 30], [10, 20,3 0], [10, 20, 30]])
+        self.array4 = numpy.array([[10, 20, 30], [10, 20, 30], [10, 20, 30]])
         self.array5 = numpy.random.randint(0,171, (100, 100))
         self.array6 = numpy.array([[0, 0, 0], [120, 120, 120],
                                    [120, 120, 120]])
