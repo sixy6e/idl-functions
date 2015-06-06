@@ -311,7 +311,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         raise TypeError(msg)
 
     if len(data.shape) != 1:
-        raise ValueError('Error. Array must be 1 dimensional. Use .flatten()')
+        data = data.ravel()
 
     if ((maxv != None) & (binsize != None) & (nbins != None)):
         msg = ("Error. Conflicting Keywords. maxv cannot be set when both "
