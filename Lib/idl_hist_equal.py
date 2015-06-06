@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import numpy
-from IDL_functions import histogram
-from IDL_functions import bytscl
+from idl_functions import histogram
+from idl_functions import bytscl
 
 
 def linear_percent(cumulative_histogram, percent, minv, binsize):
