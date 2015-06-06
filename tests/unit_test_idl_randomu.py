@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import sys
 import os
 import unittest
@@ -7,9 +8,11 @@ import numpy
 # Need to temporarily append to the PYTHONPATH in order to import the 
 # newly built randomu function
 sys.path.append(os.getcwd())
-from IDL_functions import randomu
+from idl_functions import randomu
+
 
 class IDL_randomu_Tester(unittest.TestCase):
+
     """
     A unit testing procedure for the IDL Randomu function.
     """
@@ -29,17 +32,17 @@ class IDL_randomu_Tester(unittest.TestCase):
         Test that the output column dimensions are the same.
         """
 
-        arr = numpy.arange(120).reshape((10,12))
+        arr = numpy.arange(120).reshape((10, 12))
 
-        in_rows,in_cols = arr.shape
+        in_rows, in_cols = arr.shape
 
-        in_dims = [in_cols,in_rows]
+        in_dims = [in_cols, in_rows]
 
         seed = None
 
         x, seed = randomu(seed, in_dims)
 
-        out_rows,out_cols = x.shape
+        out_rows, out_cols = x.shape
 
         self.assertEqual(in_cols, out_cols)
 
@@ -48,11 +51,11 @@ class IDL_randomu_Tester(unittest.TestCase):
         Test that the output row dimensions are the same.
         """
 
-        arr = numpy.arange(120).reshape((10,12))
+        arr = numpy.arange(120).reshape((10, 12))
 
-        in_rows,in_cols = arr.shape
+        in_rows, in_cols = arr.shape
 
-        in_dims = [in_cols,in_rows]
+        in_dims = [in_cols, in_rows]
 
         seed = None
 
@@ -70,7 +73,7 @@ class IDL_randomu_Tester(unittest.TestCase):
 
         seed = None
 
-        dims = (10,20)
+        dims = (10, 20)
 
         self.assertRaises(TypeError, randomu, seed, dims)
 
@@ -81,7 +84,7 @@ class IDL_randomu_Tester(unittest.TestCase):
 
         seed = None
 
-        dims = [1,2,3,4,5,6,7,8,9]
+        dims = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
         self.assertRaises(ValueError, randomu, seed, dims)
 
@@ -92,7 +95,7 @@ class IDL_randomu_Tester(unittest.TestCase):
         """
 
         seed = None
-        kwds = {'seed': seed, 'Binomial': [0,1,2]}
+        kwds = {'seed': seed, 'binomial': [0, 1, 2]}
 
         self.assertRaises(ValueError, randomu, **kwds)
 

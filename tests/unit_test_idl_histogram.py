@@ -1,22 +1,24 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
+
 import sys
 import os
 import unittest
 import numpy
-import unit_test_IDL_Hist
+import unit_test_idl_hist
 
 # Need to temporarily append to the PYTHONPATH in order to import the 
 # newly built histogram function
 sys.path.append(os.getcwd())
-from IDL_functions import histogram
+from idl_functions import histogram
 
 
 class IDL_histogram_Tester(unittest.TestCase):
+
     """
     A unit testing procedure for the IDL Histogram funciton.
     """
 
-    def setUp(self):
+    def set_up(self):
         self.array1 = numpy.arange(10)
         self.control1 = self.array1 > 5
         self.array2 = numpy.arange(256)
@@ -31,7 +33,7 @@ class IDL_histogram_Tester(unittest.TestCase):
         """
         # Using an array 0->9, test how many are > 5
         bool_ = numpy.zeros((10), dtype='int8')
-        unit_test_IDL_Hist.test_bool(self.array1, 10, bool_)
+        unit_test_idl_hist.test_bool(self.array1, 10, bool_)
         self.assertEqual(self.control1.sum(), 4)
 
     def test_true_false_b(self):
@@ -41,7 +43,7 @@ class IDL_histogram_Tester(unittest.TestCase):
         """
         # Using an array 0->9, test how many are > 5
         bool_ = numpy.zeros((10), dtype='int8')
-        unit_test_IDL_Hist.test_bool(self.array1, 10, bool_)
+        unit_test_idl_hist.test_bool(self.array1, 10, bool_)
         eq = self.control1 == bool_
         self.assertEqual(eq.sum(), 10)
 
@@ -57,19 +59,19 @@ class IDL_histogram_Tester(unittest.TestCase):
 
     def test_hist_max(self):
         """
-        Test that the max keyword works.
+        Test that the maxv keyword works.
         """
         # Using an array 0->255, check that 255 gets omitted
-        h = histogram(self.array2, Max=254)
+        h = histogram(self.array2, maxv=254)
         self.assertEqual(h['histogram'].shape[0], 255)
         self.assertEqual((h['histogram'] == 1).sum(), 255)
 
     def test_hist_min(self):
         """
-        Test that the min keyword works.
+        Test that the minv keyword works.
         """
         # Using an array 0->255, check that 0 gets omitted
-        h = histogram(self.array2, Min=1)
+        h = histogram(self.array2, minv=1)
         self.assertEqual(h['histogram'].shape[0], 255)
         self.assertEqual((h['histogram'] == 1).sum(), 255)
 
@@ -94,12 +96,12 @@ class IDL_histogram_Tester(unittest.TestCase):
 
     def test_nan(self):
         """
-        Test that the NaN keyword works.
+        Test that the nan keyword works.
         """
         a = self.array2.astype('float64')
         a[0] = numpy.NaN
-        h = histogram(a, NaN=True)
-        # The histogram will fail if array contains NaN's and NaN isn't set.
+        h = histogram(a, nan=True)
+        # The histogram will fail if array contains nan's and nan isn't set.
         # One element is excluded (the NaN), so test the length.
         self.assertEqual(h['histogram'].shape[0], 255)
 
@@ -147,7 +149,7 @@ class IDL_histogram_Tester(unittest.TestCase):
         # int's (and the binsize is one), pick a random element and the value
         # of the element represents the bin.
         # If reverse indices works, then the reeturned value should equal data.
-        element = numpy.random.randint(0,256,(1))[0]
+        element = numpy.random.randint(0, 256, (1))[0]
         bin = a[element]
         ri = h['ri']
         data = a[ri[ri[bin]:ri[bin+1]]]
@@ -178,9 +180,9 @@ class IDL_histogram_Tester(unittest.TestCase):
         and values.
         """
         # A random floating array in range 0-20
-        a = (self.array4)*20
+        a = (self.array4) * 20
         # Specifying Min=0 should give bin start points 0, 2.5, 5, 7.5 etc
-        h = histogram(a, reverse_indices='ri', Min=0, binsize=2.5)
+        h = histogram(a, reverse_indices='ri', minv=0, binsize=2.5)
         # Find values >= 7.5 < 17.5
         control = numpy.sort(a[(a >= 7.5) & (a < 17.5)])
         ri = h['ri']
@@ -192,21 +194,21 @@ class IDL_histogram_Tester(unittest.TestCase):
         data = numpy.sort(a[ri[ri[3]:ri[7]]])
         self.assertEqual((control - data).sum(), 0)
 
-    def test_input1(self):
+    def test_input_arr1(self):
         """
-        Test that the input keyword works and has the same length as the
+        Test that the input_arr keyword works and has the same length as the
         number of expected bins.
         """
         # Output should be of the same length as the number of bins.
         # We are using the default binsize, for values in range [0,255]
         a = self.array2
         b = self.array6
-        h = histogram(a, input=b)
+        h = histogram(a, input_arr=b)
         self.assertEqual(h['histogram'].shape[0], 256)
 
-    def test_input2(self):
+    def test_input_arr2(self):
         """
-        Test that the input keyword works and that the input is correctly
+        Test that the input_arr keyword works and that the input is correctly
         added to the histogram.
         The expected length of the histogram is the same size as the input
         array.
@@ -214,14 +216,14 @@ class IDL_histogram_Tester(unittest.TestCase):
         # We are using the default binsize, for values in range [0,255]
         a = self.array2
         b = self.array6
-        h = histogram(a, input=b)['histogram']
+        h = histogram(a, input_arr=b)['histogram']
         hcontrol = histogram(a)['histogram'] + b
         self.assertEqual((h - hcontrol).sum(), 0)
 
-    def test_input3(self):
+    def test_input_arr3(self):
         """
-        Test that the input keyword works and that the expected length of the
-        histogram should take the length of the input array.
+        Test that the input_arr keyword works and that the expected length of
+        the histogram should take the length of the input array.
         """
         # We are using the default binsize, for values in range [0,10)
         # Without using the input keyword, the histogram size should be 10.
@@ -229,12 +231,12 @@ class IDL_histogram_Tester(unittest.TestCase):
         # should be 256.
         a = self.array1
         b = self.array6
-        h = histogram(a, input=b)
+        h = histogram(a, input_arr=b)
         self.assertEqual(h['histogram'].shape[0], b.shape[0])
 
-    def test_input4(self):
+    def test_input_arr4(self):
         """
-        Test that the input keyword works and that the input is correctly
+        Test that the input_arr keyword works and that the input is correctly
         added to the histogram.
         The length of the histogram without setting the input keyword, is 10.
         However, an input array of length 256 will be used, thereby the length
@@ -243,10 +245,10 @@ class IDL_histogram_Tester(unittest.TestCase):
         # We are using the default binsize, for values in range [0,10)
         a = self.array1
         b = self.array6
-        h = histogram(a, input=b)['histogram']
+        h = histogram(a, input_arr=b)['histogram']
         # Elements h[0:9] should equal 1, and elements h[10:-1] should equal 0
         diff = h - b
-        self.assertEqual(diff.sum(),10)
+        self.assertEqual(diff.sum(), 10)
 
 if __name__ == '__main__':
     unittest.main()

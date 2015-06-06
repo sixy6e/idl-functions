@@ -7,7 +7,7 @@ import numpy
 # Need to temporarily append to the PYTHONPATH in order to import the 
 # newly built region_grow function
 sys.path.append(os.getcwd())
-from IDL_functions import region_grow
+from idl_functions import region_grow
 
 
 class IDL_region_grow_Tester(unittest.TestCase):
@@ -16,12 +16,13 @@ class IDL_region_grow_Tester(unittest.TestCase):
     """
 
     def setUp(self):
-        self.array1 = numpy.zeros((100,100))
-        self.array2 = numpy.random.randint(100,201,(10,10))
-        self.array3 = numpy.random.randint(10,31,(100,100))
-        self.array4 = numpy.array([[10,20,30],[10,20,30],[10,20,30]])
-        self.array5 = numpy.random.randint(0,171,(100,100))
-        self.array6 = numpy.array([[0,0,0],[120,120,120],[120,120,120]])
+        self.array1 = numpy.zeros((100, 100))
+        self.array2 = numpy.random.randint(100, 201, (10, 10))
+        self.array3 = numpy.random.randint(10, 31, (100, 100))
+        self.array4 = numpy.array([[10, 20, 30], [10, 20,3 0], [10, 20, 30]])
+        self.array5 = numpy.random.randint(0,171, (100, 100))
+        self.array6 = numpy.array([[0, 0, 0], [120, 120, 120],
+                                   [120, 120, 120]])
 
     def test_threshold(self):
         """
@@ -29,29 +30,31 @@ class IDL_region_grow_Tester(unittest.TestCase):
         """
         # Using an array of zeros, set the middle 10x10 to values between 100 and 200
         array = self.array1.copy()
-        array[45:55,45:55] = self.array2
-        pix = [50,50]
+        array[45:55, 45:55] = self.array2
+        pix = [50, 50]
         x = numpy.arange(9) % 3 + (pix[1] - 1)
         y = numpy.arange(9) % 3 + (pix[0] - 1)
-        roi = (y,x)
-        grown = region_grow(array, roi, threshold=[100,200])
-        diff = numpy.sum(array[grown] - self.array2.flatten())
+        roi = (y, x)
+        grown = region_grow(array, roi, threshold=[100, 200])
+        diff = numpy.sum(array[grown] - self.array2.ravel())
         self.assertEqual(0, 0)
 
     def test_min_max(self):
         """
-        Test that the min/max of the ROI is used when neither the stddev multiplier or the threshold parameters are used.
-        This will test that the entire array except the first pixel will be included in the grown region.
+        Test that the min/max of the ROI is used when neither the
+        stddev multiplier or the threshold parameters are used.
+        This will test that the entire array except the first pixel
+        will be included in the grown region.
         """
         array = self.array3.copy()
         # Set one element to a value outside the range (10 <= x <= 30)
-        array[0,0] = 40
+        array[0, 0] = 40
         # Set a region of the array to values that include 10 and 30
-        array[10:13,10:13] = self.array4
-        pix = [11,11]
+        array[10:13, 10:13] = self.array4
+        pix = [11, 11]
         x = numpy.arange(9) % 3 + (pix[1] - 1)
         y = numpy.arange(9) % 3 + (pix[0] - 1)
-        roi = (y,x)
+        roi = (y, x)
         grown = region_grow(array, roi)
         # Using the grown index set the regions to zero
         array[grown] = 0
@@ -62,17 +65,18 @@ class IDL_region_grow_Tester(unittest.TestCase):
     def test_stddev_mult(self):
         """
         Test that the standard deviation multiplier works.
-        This will test that the entire array except the first pixel will be included in the grown region.
+        This will test that the entire array except the first pixel
+        will be included in the grown region.
         """
         array = self.array5.copy()
         # Set one element to a value outside the range (0 <= x <= 170)
-        array[0,0] = 255
+        array[0, 0] = 255
         # Set a region of the array with a stddev of 60 and mean of 80
-        array[10:13,10:13] = self.array6
-        pix = [11,11]
+        array[10:13, 10:13] = self.array6
+        pix = [11, 11]
         x = numpy.arange(9) % 3 + (pix[1] - 1)
         y = numpy.arange(9) % 3 + (pix[0] - 1)
-        roi = (y,x)
+        roi = (y, x)
         grown = region_grow(array, roi, stddev_multiplier=1.5)
         # Using the grown index set the regions to zero
         array[grown] = 0
@@ -85,10 +89,10 @@ class IDL_region_grow_Tester(unittest.TestCase):
         Test that inputing a non 2D array will raise an error.
         """
         arr = numpy.zeros((100))
-        pix = [11,11]
+        pix = [11, 11]
         x = numpy.arange(9) % 3 + (pix[1] - 1)
         y = numpy.arange(9) % 3 + (pix[0] - 1)
-        roi = (y,x)
+        roi = (y, x)
         self.assertRaises(ValueError, region_grow, arr, roi)
 
     def test_roi_type1(self):
@@ -100,16 +104,17 @@ class IDL_region_grow_Tester(unittest.TestCase):
 
     def test_roi_type2(self):
         """
-        Test that the type contained in a roi raises an error if not an ndarray.
+        Test that the type contained in a roi raises an error if
+        not an ndarray.
         """
-        roi = [[1,2,3], [1,2,3]]
+        roi = [[1, 2, 3], [1, 2, 3]]
         self.assertRaises(TypeError, region_grow, self.array1, roi)
 
     def test_roi_length(self):
         """
         Test that an roi contains 2 sets of co-ordinates.
         """
-        pix = [11,11]
+        pix = [11, 11]
         x = numpy.arange(9) % 3 + (pix[1] - 1)
         roi = (x,)
         self.assertRaises(ValueError, region_grow, self.array1, roi)
@@ -119,12 +124,12 @@ class IDL_region_grow_Tester(unittest.TestCase):
         Test that a threshold containing only a single value raises an error.
         """
         array = self.array1.copy()
-        pix = [50,50]
+        pix = [50, 50]
         x = numpy.arange(9) % 3 + (pix[1] - 1)
         y = numpy.arange(9) % 3 + (pix[0] - 1)
-        roi = (y,x)
+        roi = (y, x)
         threshold = [100]
-        kwds = {'array': array, 'ROIPixels': roi, 'threshold': threshold}
+        kwds = {'array': array, 'roipixels': roi, 'threshold': threshold}
         self.assertRaises(ValueError, region_grow, **kwds)
 
 if __name__ == '__main__':

@@ -8,18 +8,19 @@ from scipy import stats
 # Need to temporarily append to the PYTHONPATH in order to import the 
 # newly built hist_equal function
 sys.path.append(os.getcwd())
-from IDL_functions import hist_equal
+from idl_functions import hist_equal
 
 class IDL_hist_equal_Tester(unittest.TestCase):
+
     """
     A unit testing procedure for the IDL hist_equal function.
     """
 
-    def setUp(self):
+    def set_up(self):
         # This should create an array with a skewness and kurtosis of ~0
         # Set an error limit, 0.01 should be ok.
         self.array = numpy.random.randn(100,100)
-        self.error   = 0.01
+        self.error = 0.01
 
     def test_kurtosis(self):
         """
@@ -42,7 +43,7 @@ class IDL_hist_equal_Tester(unittest.TestCase):
         Test that an  of an unsupported datatype raises an error.
         """
         pct = -3
-        kwds = {'array': self.array, 'Percent': pct}
+        kwds = {'array': self.array, 'percent': pct}
         self.assertRaises(ValueError, hist_equal, **kwds)
 
     def test_percent_bounds_upper(self):
@@ -50,9 +51,8 @@ class IDL_hist_equal_Tester(unittest.TestCase):
         Test that an  of an unsupported datatype raises an error.
         """
         pct = 101
-        kwds = {'array': self.array, 'Percent': pct}
+        kwds = {'array': self.array, 'percent': pct}
         self.assertRaises(ValueError, hist_equal, **kwds)
 
 if __name__ == '__main__':
     unittest.main()
-
