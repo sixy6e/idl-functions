@@ -1,2 +1,2 @@
-from IDL_functions.tests import unit_test_IDL_Hist
-from IDL_functions.tests import unit_test_IDL_hist_equal
+from idl_functions.tests import unit_test_IDL_Hist
+from idl_functions.tests import unit_test_idl_hist_equal

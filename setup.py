@@ -40,9 +40,9 @@ setup(name="idl_functions", # name of the package to import later
       #                         extra_compile_args=extra_compile_args,
       #                         ),
       ext_modules = [
-                     Extension('_idl_histogram',['Src/IDL_Histogram.f90']),
-                     Extension('idl_functions.tests.unit_test_IDL_Hist',
-                               ['tests/unit_test_IDL_Hist.f90'])
+                     Extension('_idl_histogram',['Src/idl_histogram.f90']),
+                     Extension('idl_functions.tests.unit_test_idl_hist',
+                               ['tests/unit_test_idl_hist.f90'])
                     ],
       
      ## Install these to their own directory
