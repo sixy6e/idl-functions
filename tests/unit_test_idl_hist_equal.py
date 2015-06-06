@@ -16,7 +16,7 @@ class IDL_hist_equal_Tester(unittest.TestCase):
     A unit testing procedure for the IDL hist_equal function.
     """
 
-    def set_up(self):
+    def setUp(self):
         # This should create an array with a skewness and kurtosis of ~0
         # Set an error limit, 0.01 should be ok.
         self.array = numpy.random.randn(100,100)

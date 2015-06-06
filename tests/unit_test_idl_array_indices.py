@@ -17,7 +17,7 @@ class IDL_array_indices_Tester(unittest.TestCase):
     A unit testing procedure for the IDL array_indices function.
     """
 
-    def set_up(self):
+    def setUp(self):
         self.array_1D_1 = numpy.random.randint(0,256,(10000))
         self.array_1D_2 = numpy.random.randint(0,256,(30000))
         self.array_2D = self.array_1D_1.reshape(100,100)

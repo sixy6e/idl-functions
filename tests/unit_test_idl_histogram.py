@@ -18,7 +18,7 @@ class IDL_histogram_Tester(unittest.TestCase):
     A unit testing procedure for the IDL Histogram funciton.
     """
 
-    def set_up(self):
+    def setUp(self):
         self.array1 = numpy.arange(10)
         self.control1 = self.array1 > 5
         self.array2 = numpy.arange(256)

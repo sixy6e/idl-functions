@@ -17,7 +17,7 @@ class IDL_bytscl_Tester(unittest.TestCase):
     A unit testing procedure for the IDL BYTSCL function.
     """
 
-    def set_up(self):
+    def setUp(self):
         self.array1 = numpy.random.randn(100,100)
         self.array2 = numpy.random.randint(0,256,(100,100))
 
