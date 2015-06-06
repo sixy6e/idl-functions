@@ -109,7 +109,7 @@ def bytscl(array, maxv=None, minv=None, top=255, nan=False):
 
     # Check and account for any overflow that might occur during
     # datatype conversion
-    rscl[rscl >= top] = Top
+    rscl[rscl >= top] = top
     rscl[rscl < 0] = 0
     scl = rscl.astype('uint8')
 
