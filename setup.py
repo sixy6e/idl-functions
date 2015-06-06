@@ -27,8 +27,8 @@ if ('gnu95' not in avail_fcompilers):
 extra_compile_args=['--fcompiler=gnu95']
     
 ## setup the python module
-setup(name="IDL_functions", # name of the package to import later
-      version='0.1',
+setup(name="idl_functions", # name of the package to import later
+      version='0.3',
       author='Josh Sixsmith',
       author_email='josh.sixsmith@gmail.com, joshua.sixsmith@ga.gov.au',
       # Build fortran wrappers, uses f2py
@@ -41,12 +41,16 @@ setup(name="IDL_functions", # name of the package to import later
       #                         ),
       ext_modules = [
                      Extension('_idl_histogram',['Src/IDL_Histogram.f90']),
-                     Extension('IDL_functions.tests.unit_test_IDL_Hist',['tests/unit_test_IDL_Hist.f90'])
+                     Extension('idl_functions.tests.unit_test_IDL_Hist',
+                               ['tests/unit_test_IDL_Hist.f90'])
                     ],
       
      ## Install these to their own directory
-     package_dir = {'IDL_functions':'Lib', 'IDL_functions/tests':'tests'},
-     packages = ["IDL_functions", 'IDL_functions/tests'],
-     test_suite = ['IDL_functions.tests.unit_test_IDL_histogram', 'IDL_functions.tests.unit_test_IDL_hist_equal', 'IDL_functions.tests.unit_test_IDL_array_indices', 'IDL_functions.tests.unit_test_IDL_bytscl', 'IDL_functions.tests.unit_test_IDL_region_grow', 'IDL_functions.tests.unit_test_IDL_randomu']
-     )
-
+     package_dir = {'idl_functions':'Lib', 'idl_functions/tests':'tests'},
+     packages = ["idl_functions", 'idl_functions/tests'],
+     test_suite = ['idl_functions.tests.unit_test_idl_histogram',
+                   'idl_functions.tests.unit_test_idl_hist_equal',
+                   'idl_functions.tests.unit_test_idl_array_indices',
+                   'idl_functions.tests.unit_test_idl_bytscl',
+                   'idl_functions.tests.unit_test_idl_region_grow',
+                   'idl_functions.tests.unit_test_idl_randomu'])
