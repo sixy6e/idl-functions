@@ -22,10 +22,10 @@ class IDL_histogram_Tester(unittest.TestCase):
         self.array1 = numpy.arange(10)
         self.control1 = self.array1 > 5
         self.array2 = numpy.arange(256)
-        self.array3 = numpy.arange(10,20,0.5)
+        self.array3 = numpy.arange(10, 20, 0.5)
         self.array4 = numpy.random.ranf(1000)
-        self.array5 = numpy.random.randint(0,11,(100,100))
-        self.array6 = numpy.random.randint(0,256,(256))
+        self.array5 = numpy.random.randint(0, 11, (100, 100))
+        self.array6 = numpy.random.randint(0, 256, (256)).astype('uint32')
 
     def test_true_false_a(self):
         """
