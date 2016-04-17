@@ -164,16 +164,16 @@ def hist_equal(array, binsize=None, maxv=None, minv=None, omax=None, omin=None,
         maxv = 255
         minv = 0
 
-    if (maxv == None):
+    if (maxv is None):
        maxv = numpy.amax(array)
 
-    if (minv == None):
+    if (minv is None):
        minv = numpy.amin(array)
 
-    if (top == None):
+    if (top is None):
        top = 255
 
-    if (binsize == None):
+    if (binsize is None):
         if (array.dtype == 'uint8'):
             binsize = 1
         else:
@@ -187,12 +187,12 @@ def hist_equal(array, binsize=None, maxv=None, minv=None, omax=None, omin=None,
 
     # Need to check for omin and omax so they can be returned
     return_extra = False
-    if ((type(omin) == bytes) | (type(omax) == bytes)):
+    if ((omin is not None) | (omax is not None)):
         return_extra = True
         d = {}
-        if (type(omin) == bytes):
+        if (omin is not None):
             d[omin] = h['omin']
-        if (type(omax) == bytes):
+        if (omax is not None):
             d[omax] = h['omax']
 
     # Zeroing the first element of the histogram
@@ -210,7 +210,7 @@ def hist_equal(array, binsize=None, maxv=None, minv=None, omax=None, omin=None,
             return cumu_hist
 
     # Evaluate a linear percent stretch
-    if (percent != None):
+    if (percent is not None):
         if (percent <= 0) or (percent >= 100):
             raise ValueError('Percent must be between 0 and 100')
 
