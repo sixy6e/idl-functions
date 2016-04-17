@@ -381,7 +381,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
     #           "maximum value will not be included in the histogram.")
     #    print msg
 
-    if (input_arr is None):
+    if (input_arr is not None):
         # Check that input_arr is 1-Dimensional
         if (len(input_arr.shape) != 1):
             print("input_arr will be flattened to 1D.")

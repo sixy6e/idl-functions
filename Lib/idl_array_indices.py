@@ -80,7 +80,7 @@ def array_indices(array, index, dimensions=False):
     """
  
     if (type(index) != numpy.ndarray):
-        if (numpy.isscalar(index) is True):
+        if (numpy.isscalar(index) is not True):
             msg = ("Error! "
                    "Index must either be a 1D numpy array or a scalar!!!")
             raise TypeError(msg)
