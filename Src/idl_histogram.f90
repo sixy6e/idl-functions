@@ -102,7 +102,7 @@ CONTAINS
        ! need to check that the value of array(i) is le max
        do i = 1, a_sz
           tf = (array(i) .le. max_) .and. (array(i) .ge. min_) .and. (array(i) .lt. max_bin)
-          y = tf
+          y = tf *tf
           ind = 1 + ((floor((array(i) - min_) / binsz) + 1) * y)
           hist(ind) = hist(ind) + y
        enddo
