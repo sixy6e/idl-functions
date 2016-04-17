@@ -73,13 +73,13 @@ def bytscl(array, maxv=None, minv=None, top=255, nan=False):
 
     """
 
-    if (maxv == None):
+    if (maxv is None):
         if (nan):
             maxv = numpy.nanmax(array)
         else:
             maxv = numpy.amax(array)
 
-    if (minv == None):
+    if (minv is None):
         if (nan):
             minv = numpy.nanmin(array)
         else:
