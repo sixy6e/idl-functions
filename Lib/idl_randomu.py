@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 from numpy.random import RandomState
 from numpy.random import mtrand
 
@@ -156,7 +157,7 @@ def randomu(seed, di=None, binomial=None, double=False, gamma=False,
             distributions += 1
 
     if distributions > 1:
-        print "Conflicting keywords."
+        print("Conflicting keywords.")
         return
 
     if binomial:
