@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import numpy
 from scipy import ndimage
 from idl_functions import histogram
@@ -156,16 +157,16 @@ def region_grow(array, roipixels, stddev_multiplier=None, all_neighbors=False,
                '2': case_two,
                '3': case_three}
 
-    if (stddev_multiplier == None) & (threshold == None):
+    if (stddev_multiplier is None) & (threshold is None):
         case = '1'
-    elif (stddev_multiplier == None) & (threshold != None):
+    elif (stddev_multiplier is None) & (threshold is not None):
         if (len(threshold) != 2):
             raise ValueError('Threshold must be of length 2: [Min,Max]!!!')
         case = '2'
     elif (stddev_multiplier != None) & (threshold != None):
         msg = ("Warning!!! Both stddev_multiplier and threshold parameters "
                "are set. Using threshold.")
-        print msg
+        print(msg)
         if (len(threshold) != 2):
             raise ValueError('Threshold must be of length 2: [Min,Max]!!!')
         case = '2'
