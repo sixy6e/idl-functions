@@ -80,7 +80,7 @@ def array_indices(array, index, dimensions=False):
     """
  
     if (type(index) != numpy.ndarray):
-        if (numpy.isscalar(index) != True):
+        if (numpy.isscalar(index) is True):
             msg = ("Error! "
                    "Index must either be a 1D numpy array or a scalar!!!")
             raise TypeError(msg)
@@ -120,16 +120,16 @@ def array_indices(array, index, dimensions=False):
         return index
     # 2D case
     elif (ndimensions == 2):
-        r   = index / cols
-        c   = index % cols
-        ind = (r,c)
+        r = index // cols
+        c = index % cols
+        ind = (r, c)
         return ind
     # 3D case
     elif (ndimensions == 3):
-        b   = index / (cols * rows)
-        r   = (index % (cols * rows)) / cols
-        c   = index % cols
-        ind = (b,r,c)
+        b = index // (cols * rows)
+        r = (index % (cols * rows)) // cols
+        c = index % cols
+        ind = (b, r, c)
         return ind
     # Higher D order
     else:
@@ -145,7 +145,7 @@ def array_indices(array, index, dimensions=False):
 
         # Leftmost dimension to rightmost -1 dimension
         for i in range(1,len(dims)):
-            idx.append((index / cumu_dims[i]) % dims[i-1])
+            idx.append((index // cumu_dims[i]) % dims[i-1])
 
         # For rightmost dimension, ie the columns.
         idx.append(index % dims[-1])
