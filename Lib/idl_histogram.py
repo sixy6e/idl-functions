@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import numpy
 import datetime
 import _idl_histogram
@@ -313,23 +314,23 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
     if len(data.shape) != 1:
         data = data.ravel()
 
-    if ((maxv != None) & (binsize != None) & (nbins != None)):
+    if ((maxv is not None) & (binsize is not None) & (nbins is not None)):
         msg = ("Error. Conflicting Keywords. maxv cannot be set when both "
                "binsize and nbins are set.")
         raise Exception(msg)
 
-    if ((input_arr != None) & (reverse_indices != None)):
+    if ((input_arr is not None) & (reverse_indices is not None)):
         msg = ("Error. Conflicting Keywords. Both input_arr and "
                "reverse_indices cannot be set at the same time.")
         raise Exception(msg)
 
-    if (maxv == None):
+    if (maxv is None):
         if nan:
             maxv = numpy.nanmax(data)
         else:
             maxv = numpy.max(data)
 
-    if (minv == None):
+    if (minv is None):
         if nan:
             minv = numpy.nanmin(data)
         else:
@@ -338,13 +339,16 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
     minv = data_convert(data.dtype.name, minv)
     maxv = data_convert(data.dtype.name, maxv)
 
-    if (binsize == None) & (nbins == None):
+    if (binsize is None) & (nbins is None):
         binsize = 1
         nbins = (maxv - minv) + 1
-    elif (binsize == None):
+    elif (binsize is None):
+        # TODO: monitor binsize calcs for Python3
+        # The binsize might get calculated incorrectly if True divide
+        # is used for integer datasets
         binsize = (maxv - minv) / (nbins - 1)
         maxv = nbins * binsize + minv
-    elif (binsize != None) & (nbins == None):
+    elif (binsize is not None) & (nbins is None):
         nbins = numpy.floor((maxv - minv) / binsize) + 1
     else:
         maxv = nbins * binsize + minv
@@ -377,16 +381,16 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
     #           "maximum value will not be included in the histogram.")
     #    print msg
 
-    if (input_arr != None):
+    if (input_arr is None):
         # Check that input_arr is 1-Dimensional
         if (len(input_arr.shape) != 1):
-            print "input_arr will be flattened to 1D."
+            print("input_arr will be flattened to 1D.")
             input_arr = input_arr.ravel()
 
         # Check that input is at least nbins in length
         if (input_arr.shape[0] < nbins):
-            print 'Number of elements of input_arr: ', input_arr.shape[0]
-            print 'minimum number of elemets required: ', nbins
+            print('Number of elements of input_arr: ', input_arr.shape[0])
+            print('minimum number of elemets required: ', nbins)
             msg = "Error. Input array does not have enough elements."
             raise ValueError(msg)
 
@@ -408,7 +412,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
 
     ri = False
 
-    if (type(reverse_indices) == bytes):
+    if (reverse_indices is not None):
         ri = True
         hist = get_hist[data.dtype.name](data, n, minv, maxv, binsize, nbins,
                                          max_bin, ri)
@@ -435,7 +439,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
     else:
         hist = get_hist[data.dtype.name](data, n, minv, maxv, binsize, nbins,
                                          max_bin, ri)
-        if (input_arr != None):
+        if (input_arr is not None):
             # Now to add the input array to the histogram.
             # The result will take the shape of the larger of the two arrays.
             if (input_arr.shape[0] == hist.shape[0]):
@@ -449,13 +453,13 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         else:
             results = {'histogram': hist}
 
-    if (type(omax) == bytes):
+    if (omax is not None):
         results[omax] = maxv
 
-    if (type(omin) == bytes):
+    if (omin is not None):
         results[omin] = minv
 
-    if (type(locations) == bytes):
+    if (locations is not None):
         loc = numpy.zeros(nbins, dtype=data.dtype.name)
         for i in numpy.arange(nbins):
             loc[i] = minv + i * binsize
