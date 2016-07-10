@@ -88,18 +88,14 @@ def bytscl(array, maxv=None, minv=None, top=255, nan=False):
     if (top > 255):
         top = 255
 
-    scl = array.copy()
-    scl[scl >= maxv] = top
-    scl[scl <= minv] = 0
-
     int_types = ['int', 'int8', 'int16', 'int32', 'int64', 'uint8', 'uint16',
                  'uint32', 'uint64']
     flt_types = ['float', 'float16', 'float32', 'float64']
 
     if (array.dtype in int_types):
-        rscl = numpy.floor(((top + 1.) * (scl - minv) - 1.) / (maxv - minv))
+        rscl = numpy.floor(((top + 1.) * (array - minv) - 1.) / (maxv - minv))
     elif (array.dtype in flt_types):
-        rscl = numpy.floor((top + 0.9999) * (scl - minv) / (maxv - minv))
+        rscl = numpy.floor((top + 0.9999) * (array - minv) / (maxv - minv))
     else:
         msg = ("Error! Unknown datatype. "
                "Supported datatypes are: "
@@ -109,8 +105,7 @@ def bytscl(array, maxv=None, minv=None, top=255, nan=False):
 
     # Check and account for any overflow that might occur during
     # datatype conversion
-    rscl[rscl >= top] = top
-    rscl[rscl < 0] = 0
+    numpy.clip(rscl, 0, top, out=rscl)
     scl = rscl.astype('uint8')
 
     return scl
