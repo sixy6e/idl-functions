@@ -232,8 +232,9 @@ def hist_equal(array, binsize=None, maxv=None, minv=None, omax=None, omin=None,
         scl = (scl_lookup[arr.ravel() - minv]).reshape(dims)
     else:
         # We need to divide by the binsize in order to the bin position
-        # Clip the lower bounds
+        # Clip the lower bounds, account for nan's
         arr = array.clip(min=minv)
+        arr[~numpy.isfinite(arr)] = minv
         arr = numpy.floor((arr - minv) / binsize).astype('int')
         scl = (scl_lookup[arr.ravel()]).reshape(dims)
 
