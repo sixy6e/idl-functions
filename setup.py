@@ -28,7 +28,7 @@ extra_compile_args=['--fcompiler=gnu95']
     
 ## setup the python module
 setup(name="idl_functions", # name of the package to import later
-      version='0.5.1',
+      version='0.5.2',
       author='Josh Sixsmith',
       author_email='josh.sixsmith@gmail.com, joshua.sixsmith@ga.gov.au',
       # Build fortran wrappers, uses f2py
