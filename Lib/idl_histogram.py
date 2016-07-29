@@ -116,7 +116,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # into the 1st position then removed prior to returning to the user.
 
         nbins_ = nbins + 1
-        hist = numpy.zeros(nbins_, dtype='uint32')
+        hist = numpy.zeros(int(nbins_), dtype='uint32')
 
         _idl_histogram.idl_histogram.histogram_int(data, hist, n, nbins_, minv,
                                                    maxv, max_bin, binsize)
@@ -132,7 +132,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # into the 1st position then removed prior to returning to the user.
 
         nbins_ = nbins + 1
-        hist = numpy.zeros(nbins_, dtype='uint32')
+        hist = numpy.zeros(int(nbins_), dtype='uint32')
 
         _idl_histogram.idl_histogram.histogram_long(data, hist, n, nbins_,
                                                     minv, maxv, max_bin,
@@ -149,7 +149,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # into the 1st position then removed prior to returning to the user.
 
         nbins_ = nbins + 1
-        hist = numpy.zeros(nbins_, dtype='uint32')
+        hist = numpy.zeros(int(nbins_), dtype='uint32')
 
         _idl_histogram.idl_histogram.histogram_dlong(data, hist, n, nbins_,
                                                      minv, maxv, max_bin,
@@ -166,7 +166,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # into the 1st position then removed prior to returning to the user.
 
         nbins_ = nbins + 1
-        hist = numpy.zeros(nbins_, dtype='uint32')
+        hist = numpy.zeros(int(nbins_), dtype='uint32')
 
         _idl_histogram.idl_histogram.histogram_float(data, hist, n, nbins_,
                                                      minv, maxv, max_bin,
@@ -183,7 +183,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # into the 1st position then removed prior to returning to the user.
 
         nbins_ = nbins + 1
-        hist = numpy.zeros(nbins_, dtype='uint32')
+        hist = numpy.zeros(int(nbins_), dtype='uint32')
 
         _idl_histogram.idl_histogram.histogram_dfloat(data, hist, n, nbins_,
                                                       minv, maxv, max_bin,
@@ -201,7 +201,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # user.
 
         nbins_ = nbins + 1
-        ri = numpy.zeros(ri_sz, dtype='uint32')
+        ri = numpy.zeros(int(ri_sz), dtype='uint32')
 
         _idl_histogram.idl_histogram.reverse_indices_int(data, hist, ri,
                                                          nbins_, n, ri_sz,
@@ -217,7 +217,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # user.
 
         nbins_ = nbins + 1
-        ri = numpy.zeros(ri_sz, dtype='uint32')
+        ri = numpy.zeros(int(ri_sz), dtype='uint32')
 
         _idl_histogram.idl_histogram.reverse_indices_long(data, hist, ri,
                                                           nbins_, n, ri_sz,
@@ -233,7 +233,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # user.
 
         nbins_ = nbins + 1
-        ri = numpy.zeros(ri_sz, dtype='uint32')
+        ri = numpy.zeros(int(ri_sz), dtype='uint32')
 
         _idl_histogram.idl_histogram.reverse_indices_dlong(data, hist, ri,
                                                            nbins_, n, ri_sz,
@@ -249,7 +249,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # user.
 
         nbins_ = nbins + 1
-        ri = numpy.zeros(ri_sz, dtype='uint32')
+        ri = numpy.zeros(int(ri_sz), dtype='uint32')
 
         _idl_histogram.idl_histogram.reverse_indices_float(data, hist, ri,
                                                            nbins_, n, ri_sz,
@@ -265,7 +265,7 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         # user.
 
         nbins_ = nbins + 1
-        ri = numpy.zeros(ri_sz, dtype='uint32')
+        ri = numpy.zeros(int(ri_sz), dtype='uint32')
 
         _idl_histogram.idl_histogram.reverse_indices_dfloat(data, hist, ri,
                                                             nbins_, n, ri_sz,
