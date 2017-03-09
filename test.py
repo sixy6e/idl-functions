@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import absolute_import
+from __future__ import print_function
 import os
 import sys
 import subprocess
@@ -42,15 +44,15 @@ if __name__ == '__main__':
         os.chdir(os.pardir)
 
         # Now execute the unittest script from the command line
-        print "Testing idl_histogram"
+        print("Testing idl_histogram")
         subprocess.call(['python', test_file1])
-        print "Testing idl_hist_equal"
+        print("Testing idl_hist_equal")
         subprocess.call(['python', test_file2])
-        print "Testing idl_array_indices"
+        print("Testing idl_array_indices")
         subprocess.call(['python', test_file3])
-        print "Testing idl_bytscl"
+        print("Testing idl_bytscl")
         subprocess.call(['python', test_file4])
-        print "Testing idl_region_grow"
+        print("Testing idl_region_grow")
         subprocess.call(['python', test_file5])
-        print "Testing idl_randomu"
+        print("Testing idl_randomu")
         subprocess.call(['python', test_file6])

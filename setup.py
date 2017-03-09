@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 import sys
 
 # we should build this module in three steps:
@@ -22,7 +24,7 @@ from numpy.distutils import fcompiler
 # is not found.
 avail_fcompilers = fcompiler.available_fcompilers_for_platform()
 if ('gnu95' not in avail_fcompilers):
-    print 'gnu95 compiler not found'
+    print('gnu95 compiler not found')
  
 extra_compile_args=['--fcompiler=gnu95']
     

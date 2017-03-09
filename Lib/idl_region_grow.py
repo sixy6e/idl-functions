@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+from __future__ import absolute_import
 import numpy
 from scipy import ndimage
 from idl_functions import histogram
