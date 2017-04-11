@@ -33,21 +33,13 @@ setup(name="idl_functions", # name of the package to import later
       version='0.5.2',
       author='Josh Sixsmith',
       author_email='josh.sixsmith@gmail.com, joshua.sixsmith@ga.gov.au',
-      # Build fortran wrappers, uses f2py
-      #ext_modules = [Extension('_idl_histogram', ['Src/IDL_Histogram.f90'],
-      #                          files,
-      #                         libraries=[],
-      #                         library_dirs=[],
-      #  		       include_dirs=['Src'],
-      #                         extra_compile_args=extra_compile_args,
-      #                         ),
       ext_modules = [
-                     Extension('_idl_histogram',['Src/idl_histogram.f90']),
+                     Extension('_idl_histogram',['lib/idl_histogram.f90']),
                      Extension('idl_functions.tests.unit_test_idl_hist',
                                ['tests/unit_test_idl_hist.f90'])
                     ],
       
      ## Install these to their own directory
-     package_dir = {'idl_functions':'Lib', 'idl_functions/tests':'tests'},
+     package_dir = {'idl_functions':'lib', 'idl_functions/tests':'tests'},
      packages = ["idl_functions", 'idl_functions/tests'],
 )
