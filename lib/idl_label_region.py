@@ -78,9 +78,9 @@ def label_region(data, all_neighbors=False, ulong=False):
         kernel = numpy.array([[0,1,0],[1,1,1],[0,1,0]]).reshape(3,3)
 
     if ulong:
-        result = numpy.zeros(data.shape, dtype='UInt32')
+        result = numpy.zeros(data.shape, dtype='uint32')
     else:
-        result = numpy.zeros(data.shape, dtype='UInt16')
+        result = numpy.zeros(data.shape, dtype='uint16')
 
     # We don't return the number of features
     nfeatures = ndimage.label(data, structure=kernel, output=result)
