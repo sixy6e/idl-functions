@@ -344,10 +344,12 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         binsize = 1
         nbins = (maxv - minv) + 1
     elif (binsize is None):
-        # TODO: monitor binsize calcs for Python3
-        # The binsize might get calculated incorrectly if True divide
-        # is used for integer datasets
-        binsize = (maxv - minv) / (nbins - 1)
+        # floor division is desireable for ints but not for floats
+        # py2 would do true divide if the datatype was float
+        if 'int' in data.dtype.name:
+            binsize = (maxv - minv) // (nbins - 1)
+        else:
+            binsize = (maxv - minv) / (nbins - 1)
         maxv = nbins * binsize + minv
     elif (binsize is not None) & (nbins is None):
         nbins = numpy.floor((maxv - minv) / binsize) + 1
