@@ -463,8 +463,8 @@ def histogram(data, binsize=None, maxv=None, minv=None, nbins=None, omax=None,
         results[omin] = minv
 
     if (locations is not None):
-        loc = numpy.zeros(nbins, dtype=data.dtype.name)
-        for i in numpy.arange(nbins):
+        loc = numpy.zeros(int(nbins), dtype=data.dtype.name)
+        for i in numpy.arange(int(nbins)):
             loc[i] = minv + i * binsize
 
         results[locations] = loc
