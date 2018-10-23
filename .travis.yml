@@ -1,0 +1,29 @@
+language: python
+python:
+- '3.6'
+cache:
+  pip: true
+  apt: true
+addons:
+  apt:
+    update: true
+    packages:
+    - gfortran
+before_install:
+- pip install --upgrade pip
+- pip install -r requirements.txt
+install:
+- python setup.py build  # --fcompiler=gnu95
+script:
+- python test.py
+before_deploy:
+- python setup.py sdist
+#deploy:
+#  provider: releases
+#  file_glob: true
+#  file: dist/*
+#  skip_cleanup: true
+#  on:
+#    tags: true
+#    condition: "$TRAVIS_TAG =~ idl-functions-[0-9]+\\.[0-9]+\\.[0-9]+$"
+#    repo: sixy6e/idl-functions

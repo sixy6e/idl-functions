@@ -6,4 +6,5 @@ from .idl_array_indices import array_indices
 from .idl_label_region import label_region
 from .idl_region_grow import region_grow
 from .idl_randomu import randomu
-__version__ = '0.3'
+
+__version__ = '0.5.4'
