@@ -24,8 +24,6 @@ avail_fcompilers = fcompiler.available_fcompilers_for_platform()
 if ('gnu95' not in avail_fcompilers):
     raise RuntimeError("gnu95 required to install idl-functions")
  
-extra_compile_args=['--fcompiler=gnu95']
-    
 ## setup the python module
 setup(name="idl_functions", # name of the package to import later
       version='0.5.4',
