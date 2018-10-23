@@ -6,7 +6,7 @@ addons:
   apt:
     update: true
     packages:
-    - gfortran5
+    - gfortran
 before_install:
 - pip install --upgrade pip
 - pip install -r requirements.txt
