@@ -2,9 +2,12 @@ language: python
 cache:
   pip: true
   apt: true
+addons:
+  apt:
+    update: true
+    packages:
+    - gfortran5
 before_install:
-- sudo apt-get update -qq -y
-- sudo apt-get upgrade -y gfortran5
 - pip install --upgrade pip
 - pip install -r requirements.txt
 install:
