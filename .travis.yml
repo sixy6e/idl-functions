@@ -8,7 +8,7 @@ before_install:
 - pip install --upgrade pip
 - pip install -r requirements.txt
 install:
-- python setup.py build --fcompiler=gnu95
+- python setup.py build  # --fcompiler=gnu95
 script:
 - python test.py
 before_deploy:
