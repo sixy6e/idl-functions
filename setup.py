@@ -20,21 +20,20 @@ import sys
 from numpy.distutils.core import setup, Extension
 from numpy.distutils import fcompiler
 
-# TODO Need to incorporate a complete fail and exit if the gnu95 compiler
-# is not found.
 avail_fcompilers = fcompiler.available_fcompilers_for_platform()
 if ('gnu95' not in avail_fcompilers):
-    print('gnu95 compiler not found')
+    raise RuntimeError("gnu95 required to install idl-functions")
  
 extra_compile_args=['--fcompiler=gnu95']
     
 ## setup the python module
 setup(name="idl_functions", # name of the package to import later
-      version='0.5.2',
+      version='0.5.4',
       author='Josh Sixsmith',
       author_email='josh.sixsmith@gmail.com, joshua.sixsmith@ga.gov.au',
+      url='https://github.com/sixy6e/idl-functions',
       ext_modules = [
-                     Extension('_idl_histogram',['lib/idl_histogram.f90']),
+                     Extension('_idl_histogram', ['lib/idl_histogram.f90']),
                      Extension('idl_functions.tests.unit_test_idl_hist',
                                ['tests/unit_test_idl_hist.f90'])
                     ],
